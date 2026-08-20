@@ -33,7 +33,7 @@ const people = [
   },
 ];
 
-const PUBLIC_SITE_URL = "https://theydreez.github.io/cbi-connect";
+const PUBLIC_SITE_URL = "https://cbisa-connect.github.io/cbi-connect";
 const BRAND_DARK = "#004438";
 
 function normalizePhone(phone) {

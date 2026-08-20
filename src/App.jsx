@@ -86,7 +86,7 @@ const people = [
   },
 ];
 
-const PUBLIC_SITE_URL = "https://theydreez.github.io/cbi-connect";
+const PUBLIC_SITE_URL = "https://cbisa-connect.github.io/cbi-connect";
 
 function getContactUrl(slug) {
   return `${PUBLIC_SITE_URL}/#/${encodeURIComponent(slug)}`;
