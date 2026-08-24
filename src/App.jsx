@@ -48,24 +48,31 @@ const LinkedinIcon = ({ className }) => (
 function ActionCard({ icon: Icon, title, description, href, onClick, disabled = false, primary = false }) {
   const content = (
     <div className={cn(
-      "flex items-center justify-between rounded-xl px-5 py-4 w-full",
+      "flex items-center justify-between rounded-2xl px-5 py-4 w-full border transition-colors duration-200",
       primary 
-        ? "bg-[var(--cbi-green)] text-white" 
-        : "bg-white border border-[var(--border)] text-[var(--text-primary)] hover:border-gray-200",
-      disabled ? "opacity-50 grayscale cursor-not-allowed" : "hover:shadow-sm transition-all duration-200"
+        ? "bg-[var(--cbi-primary)] border-transparent text-[#03120E] hover:bg-[var(--cbi-primary-hover)]" 
+        : "bg-[var(--cbi-surface)] border-[var(--border)] text-[var(--text-primary)] hover:bg-[var(--cbi-surface-hover)] hover:border-[var(--border-hover)]",
+      disabled && "opacity-40 grayscale cursor-not-allowed"
     )}>
       <div className="flex items-center gap-4 text-left">
-        <Icon className={cn("h-[22px] w-[22px] shrink-0", primary ? "text-white" : "text-[var(--text-secondary)]")} strokeWidth={1.5} />
+        <Icon 
+          className={cn("h-[22px] w-[22px] shrink-0", primary ? "text-[#03120E]" : "text-[var(--cbi-primary)]")} 
+          strokeWidth={1.75} 
+        />
         <div className="flex flex-col">
-          <span className="text-[15px] font-semibold tracking-tight">{title}</span>
+          <span className={cn("text-[15px] font-semibold tracking-tight", primary && "font-bold")}>
+            {title}
+          </span>
           {description && (
-            <span className={cn("text-[13px] mt-0.5", primary ? "text-white/80" : "text-[var(--text-secondary)]")}>
+            <span className={cn("text-[13px] mt-0.5", primary ? "text-[#03120E]/80 font-medium" : "text-[var(--text-secondary)] font-medium")}>
               {description}
             </span>
           )}
         </div>
       </div>
-      {!disabled && <ChevronRight className={cn("h-5 w-5 shrink-0", primary ? "text-white/80" : "text-gray-300")} />}
+      {!disabled && (
+        <ChevronRight className={cn("h-5 w-5 shrink-0", primary ? "text-[#03120E]/60" : "text-[var(--text-secondary)] opacity-50")} />
+      )}
     </div>
   );
 
@@ -78,8 +85,9 @@ function ActionCard({ icon: Icon, title, description, href, onClick, disabled = 
       <motion.a 
         href={href}
         className="w-full block"
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
+        whileHover={{ scale: 1.015 }}
+        whileTap={{ scale: 0.985 }}
+        transition={{ type: "spring", stiffness: 400, damping: 25 }}
       >
         {content}
       </motion.a>
@@ -90,8 +98,9 @@ function ActionCard({ icon: Icon, title, description, href, onClick, disabled = 
     <motion.button 
       onClick={onClick} 
       className="w-full block"
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
+      whileHover={{ scale: 1.015 }}
+      whileTap={{ scale: 0.985 }}
+      transition={{ type: "spring", stiffness: 400, damping: 25 }}
     >
       {content}
     </motion.button>
@@ -108,23 +117,23 @@ function LinktreePage({ person }) {
 
   return (
     <motion.div 
-      initial={{ opacity: 0, y: 12 }} 
+      initial={{ opacity: 0, y: 16 }} 
       animate={{ opacity: 1, y: 0 }} 
-      exit={{ opacity: 0, y: -12 }} 
-      className="mx-auto w-full max-w-[520px] px-5 py-12 flex flex-col items-center"
+      exit={{ opacity: 0, y: -16 }} 
+      className="mx-auto w-full max-w-[520px] px-5 py-14 flex flex-col items-center"
     >
       {/* Header */}
-      <img src={`${import.meta.env.BASE_URL}logo-cbi.png`} alt="CBI Logo" className="h-16 w-auto mb-6 rounded-lg object-contain" />
+      <img src={`${import.meta.env.BASE_URL}logo-cbi-bco.png`} alt="CBI Logo" className="h-11 w-auto mb-10 object-contain" />
       
-      <h1 className="text-2xl font-bold text-[var(--text-primary)] text-center tracking-tight mb-1">
+      <h1 className="text-[22px] font-semibold text-[var(--text-primary)] text-center tracking-tight mb-1.5">
         {person.name}
       </h1>
-      <p className="text-[15px] text-[var(--text-secondary)] font-medium text-center mb-10">
+      <p className="text-[14px] text-[var(--text-secondary)] font-medium text-center mb-10 tracking-wide uppercase">
         {person.position}
       </p>
 
       {/* Links */}
-      <div className="w-full space-y-3.5 flex flex-col">
+      <div className="w-full space-y-3 flex flex-col">
         <ActionCard 
           icon={LinkedinIcon} 
           title="LinkedIn" 
@@ -163,17 +172,15 @@ function LinktreePage({ person }) {
           href="https://cbisa.com.br" 
         />
         
-        <div className="pt-2">
+        <div className="pt-3">
           <ActionCard 
             icon={Download} 
             title="Salvar contato" 
-            description="Adicionar aos contatos" 
             onClick={() => downloadVCard(person)}
             primary={true}
           />
         </div>
       </div>
-
     </motion.div>
   );
 }
@@ -193,13 +200,13 @@ export default function App() {
   const contact = directorsData.find((item) => item.slug === slug && item.active);
 
   return (
-    <div className="min-h-[100dvh] flex flex-col items-center justify-start sm:justify-center">
+    <div className="min-h-[100dvh] flex flex-col items-center justify-start sm:justify-center bg-[var(--cbi-bg)]">
       <AnimatePresence mode="wait">
         {slug === "" ? (
           <motion.div key="home" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-center px-6 py-20 flex flex-col items-center">
-            <img src={`${import.meta.env.BASE_URL}logo-cbi.png`} alt="CBI Logo" className="h-16 w-auto mb-6 rounded-lg object-contain" />
-            <h1 className="text-xl font-bold text-[var(--text-primary)] mb-2">CBI Connect</h1>
-            <p className="text-[15px] text-[var(--text-secondary)] font-medium max-w-[280px]">
+            <img src={`${import.meta.env.BASE_URL}logo-cbi-bco.png`} alt="CBI Logo" className="h-11 w-auto mb-8 object-contain" />
+            <h1 className="text-xl font-semibold text-[var(--text-primary)] mb-2">CBI Connect</h1>
+            <p className="text-[14px] text-[var(--text-secondary)] font-medium max-w-[280px]">
               Utilize o QR Code ou o link individual disponibilizado pelo executivo da CBI.
             </p>
           </motion.div>
@@ -207,9 +214,9 @@ export default function App() {
           <LinktreePage key={contact.slug} person={contact} />
         ) : (
           <motion.div key="not-found" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-center px-6 py-20 flex flex-col items-center">
-            <img src={`${import.meta.env.BASE_URL}logo-cbi.png`} alt="CBI Logo" className="h-16 w-auto mb-6 rounded-lg object-contain grayscale opacity-50" />
-            <h1 className="text-xl font-bold text-[var(--text-primary)] mb-2">Página não encontrada</h1>
-            <p className="text-[15px] text-[var(--text-secondary)] font-medium max-w-[280px]">
+            <img src={`${import.meta.env.BASE_URL}logo-cbi-bco.png`} alt="CBI Logo" className="h-11 w-auto mb-8 object-contain opacity-40 grayscale" />
+            <h1 className="text-xl font-semibold text-[var(--text-primary)] mb-2">Página não encontrada</h1>
+            <p className="text-[14px] text-[var(--text-secondary)] font-medium max-w-[280px]">
               Verifique o link ou QR Code escaneado.
             </p>
           </motion.div>

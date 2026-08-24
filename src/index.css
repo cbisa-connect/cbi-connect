@@ -4,21 +4,22 @@
 
 @layer base {
   :root {
-    --cbi-green: #0A4437;
-    --cbi-green-light: #0F5C4C;
-    --cbi-green-dark: #062E25;
+    /* CBI Operations Center / Ticket System Theme */
+    --cbi-bg: #03120E;          /* Fundo em verde extremamente escuro */
+    --cbi-surface: #08221B;     /* Cards escuros com contraste sutil */
+    --cbi-surface-hover: #0C3026;
+    --cbi-primary: #15B886;     /* Verde institucional/turquesa para ações */
+    --cbi-primary-hover: #18D298;
     
-    --background: #F7F9F8;
-    --surface: #FFFFFF;
+    --text-primary: #FFFFFF;
+    --text-secondary: #8CA9A0;  /* Cinza esverdeado para informações secundárias */
     
-    --text-primary: #1A1A1A;
-    --text-secondary: #5B6170;
-    
-    --border: rgba(0,0,0,.08);
+    --border: rgba(255, 255, 255, 0.06);
+    --border-hover: rgba(255, 255, 255, 0.12);
   }
 
   body {
-    background-color: var(--background);
+    background-color: var(--cbi-bg);
     color: var(--text-primary);
     font-family: 'Inter', sans-serif;
     -webkit-font-smoothing: antialiased;
