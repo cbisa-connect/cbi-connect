@@ -1,0 +1,44 @@
+[
+  {
+    "slug": "felipe-reis",
+    "name": "Felipe Reis",
+    "position": "Coordenação de Relações com Investidores",
+    "department": "Companhia Brasileira de Infraestrutura",
+    "description": "Responsável pela coordenação de relações com investidores e parceiros estratégicos da companhia.",
+    "email": "felipe.reis@cbisa.com.br",
+    "phone": "",
+    "whatsapp": "",
+    "linkedin": "",
+    "photo": "",
+    "initials": "FR",
+    "active": true
+  },
+  {
+    "slug": "alessandro-hidalgo",
+    "name": "Alessandro José Conte Hidalgo",
+    "position": "Diretor Administrativo Financeiro",
+    "department": "Companhia Brasileira de Infraestrutura",
+    "description": "Executivo responsável pela gestão administrativa, financeira e estratégica da companhia.",
+    "email": "alessandro.hidalgo@cbisa.com.br",
+    "phone": "11999999999",
+    "whatsapp": "11999999999",
+    "linkedin": "https://linkedin.com/in/alessandrohidalgo",
+    "photo": "",
+    "initials": "AH",
+    "active": true
+  },
+  {
+    "slug": "andre-pereira",
+    "name": "André Pereira",
+    "position": "Diretoria Administrativa, Financeira e Tecnologia",
+    "department": "Companhia Brasileira de Infraestrutura",
+    "description": "Liderança executiva nas frentes de tecnologia, finanças e administração corporativa.",
+    "email": "andre.pereira@cbisa.com.br",
+    "phone": "",
+    "whatsapp": "",
+    "linkedin": "",
+    "photo": "",
+    "initials": "AP",
+    "active": true
+  }
+]

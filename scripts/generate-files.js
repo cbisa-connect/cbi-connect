@@ -6,32 +6,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const people = [
-  {
-    slug: "felipe-reis",
-    name: "Felipe Reis",
-    role: "Coordenação de Relações com Investidores",
-    email: "felipe.reis@cbisa.com.br",
-    phone: "",
-    linkedin: "",
-  },
-  {
-    slug: "alessandro-hidalgo",
-    name: "Alessandro Hidalgo",
-    role: "Diretoria Comercial e Operações",
-    email: "alessandro.hidalgo@cbisa.com.br",
-    phone: "",
-    linkedin: "",
-  },
-  {
-    slug: "andre-pereira",
-    name: "André Pereira",
-    role: "Diretoria Administrativa, Financeira e Tecnologia",
-    email: "andre.pereira@cbisa.com.br",
-    phone: "",
-    linkedin: "",
-  },
-];
+const people = JSON.parse(fs.readFileSync(path.join(__dirname, '../src/data/directors.json'), 'utf8'));
 
 const PUBLIC_SITE_URL = "https://cbisa-connect.github.io/cbi-connect";
 const BRAND_DARK = "#004438";
@@ -46,7 +21,7 @@ function makeVCard(person) {
     "VERSION:3.0",
     `FN:${person.name}`,
     "ORG:Companhia Brasileira de Infraestrutura",
-    `TITLE:${person.role}`,
+    `TITLE:${person.position}`,
     person.phone ? `TEL;TYPE=CELL:+${normalizePhone(person.phone)}` : "",
     `EMAIL;TYPE=WORK:${person.email}`,
     person.linkedin ? `URL:${person.linkedin}` : "",
