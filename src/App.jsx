@@ -114,7 +114,7 @@ function LinktreePage({ person }) {
       className="mx-auto w-full max-w-[520px] px-5 py-12 flex flex-col items-center"
     >
       {/* Header */}
-      <img src={`${import.meta.env.BASE_URL}logo-cbi.jpg`} alt="CBI Logo" className="h-16 w-auto mb-6 rounded-lg object-contain" />
+      <img src={`${import.meta.env.BASE_URL}logo-cbi.png`} alt="CBI Logo" className="h-16 w-auto mb-6 rounded-lg object-contain" />
       
       <h1 className="text-2xl font-bold text-[var(--text-primary)] text-center tracking-tight mb-1">
         {person.name}
@@ -197,7 +197,7 @@ export default function App() {
       <AnimatePresence mode="wait">
         {slug === "" ? (
           <motion.div key="home" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-center px-6 py-20 flex flex-col items-center">
-            <img src={`${import.meta.env.BASE_URL}logo-cbi.jpg`} alt="CBI Logo" className="h-16 w-auto mb-6 rounded-lg object-contain" />
+            <img src={`${import.meta.env.BASE_URL}logo-cbi.png`} alt="CBI Logo" className="h-16 w-auto mb-6 rounded-lg object-contain" />
             <h1 className="text-xl font-bold text-[var(--text-primary)] mb-2">CBI Connect</h1>
             <p className="text-[15px] text-[var(--text-secondary)] font-medium max-w-[280px]">
               Utilize o QR Code ou o link individual disponibilizado pelo executivo da CBI.
@@ -207,7 +207,7 @@ export default function App() {
           <LinktreePage key={contact.slug} person={contact} />
         ) : (
           <motion.div key="not-found" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-center px-6 py-20 flex flex-col items-center">
-            <img src={`${import.meta.env.BASE_URL}logo-cbi.jpg`} alt="CBI Logo" className="h-16 w-auto mb-6 rounded-lg object-contain grayscale opacity-50" />
+            <img src={`${import.meta.env.BASE_URL}logo-cbi.png`} alt="CBI Logo" className="h-16 w-auto mb-6 rounded-lg object-contain grayscale opacity-50" />
             <h1 className="text-xl font-bold text-[var(--text-primary)] mb-2">Página não encontrada</h1>
             <p className="text-[15px] text-[var(--text-secondary)] font-medium max-w-[280px]">
               Verifique o link ou QR Code escaneado.
