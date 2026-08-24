@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Building2,
   Mail,
   Phone,
   MessageCircle,
@@ -9,14 +8,6 @@ import {
   Globe,
   ChevronRight
 } from "lucide-react";
-
-const LinkedinIcon = ({ className }) => (
-  <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-    <rect width="4" height="12" x="2" y="9" />
-    <circle cx="4" cy="4" r="2" />
-  </svg>
-);
 import clsx from "clsx";
 import { twMerge } from "tailwind-merge";
 import directorsData from "./data/directors.json";
@@ -25,15 +16,7 @@ export function cn(...inputs) {
   return twMerge(clsx(inputs));
 }
 
-// ----------------------------------------
-// Helpers
-// ----------------------------------------
-
 const PUBLIC_SITE_URL = "https://cbisa-connect.github.io/cbi-connect";
-
-function getContactUrl(slug) {
-  return `${PUBLIC_SITE_URL}/#/${encodeURIComponent(slug)}`;
-}
 
 function normalizePhone(phone) {
   if (!phone) return "";
@@ -50,55 +33,39 @@ function downloadVCard(person) {
   a.remove();
 }
 
+const LinkedinIcon = ({ className }) => (
+  <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+    <rect width="4" height="12" x="2" y="9" />
+    <circle cx="4" cy="4" r="2" />
+  </svg>
+);
+
 // ----------------------------------------
 // UI Components
 // ----------------------------------------
 
-function Avatar({ person, large = false }) {
-  if (person.photo) {
-    return (
-      <img
-        src={person.photo}
-        alt={person.name}
-        className={cn(
-          "shrink-0 rounded-full object-cover shadow-sm ring-4 ring-white",
-          large ? "h-28 w-28" : "h-12 w-12"
-        )}
-      />
-    );
-  }
-  
-  return (
-    <div
-      className={cn(
-        "grid shrink-0 place-items-center rounded-full font-semibold text-white shadow-sm ring-4 ring-white",
-        large ? "h-28 w-28 text-3xl" : "h-12 w-12 text-sm"
-      )}
-      style={{ backgroundColor: "var(--cbi-green)" }}
-      aria-label={`Foto de ${person.name}`}
-    >
-      {person.initials}
-    </div>
-  );
-}
-
-function ActionCard({ icon: Icon, title, description, href, onClick, disabled = false }) {
+function ActionCard({ icon: Icon, title, description, href, onClick, disabled = false, primary = false }) {
   const content = (
     <div className={cn(
-      "flex items-center justify-between rounded-[24px] bg-white p-4 transition-all duration-200",
-      disabled ? "opacity-50 grayscale cursor-not-allowed" : "hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)]",
-      "border border-[var(--border)]"
+      "flex items-center justify-between rounded-xl px-5 py-4 w-full",
+      primary 
+        ? "bg-[var(--cbi-green)] text-white" 
+        : "bg-white border border-[var(--border)] text-[var(--text-primary)] hover:border-gray-200",
+      disabled ? "opacity-50 grayscale cursor-not-allowed" : "hover:shadow-sm transition-all duration-200"
     )}>
-      <div className="flex items-center gap-4">
-        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[16px] bg-[#F7F9F8] text-[var(--cbi-green)]">
-          <Icon className="h-5 w-5" strokeWidth={2} />
-        </div>
+      <div className="flex items-center gap-4 text-left">
+        <Icon className={cn("h-[22px] w-[22px] shrink-0", primary ? "text-white" : "text-[var(--text-secondary)]")} strokeWidth={1.5} />
         <div className="flex flex-col">
-          <span className="text-[15px] font-semibold text-[var(--text-primary)] leading-tight">{title}</span>
-          <span className="text-[13px] font-medium text-[var(--text-secondary)] mt-0.5">{description}</span>
+          <span className="text-[15px] font-semibold tracking-tight">{title}</span>
+          {description && (
+            <span className={cn("text-[13px] mt-0.5", primary ? "text-white/80" : "text-[var(--text-secondary)]")}>
+              {description}
+            </span>
+          )}
         </div>
       </div>
-      {!disabled && <ChevronRight className="h-5 w-5 text-gray-300 mr-2" />}
+      {!disabled && <ChevronRight className={cn("h-5 w-5 shrink-0", primary ? "text-white/80" : "text-gray-300")} />}
     </div>
   );
 
@@ -113,7 +80,6 @@ function ActionCard({ icon: Icon, title, description, href, onClick, disabled = 
         className="w-full block"
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
-        transition={{ duration: 0.2 }}
       >
         {content}
       </motion.a>
@@ -123,10 +89,9 @@ function ActionCard({ icon: Icon, title, description, href, onClick, disabled = 
   return (
     <motion.button 
       onClick={onClick} 
-      className="w-full block text-left"
+      className="w-full block"
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
-      transition={{ duration: 0.2 }}
     >
       {content}
     </motion.button>
@@ -137,98 +102,78 @@ function ActionCard({ icon: Icon, title, description, href, onClick, disabled = 
 // Pages
 // ----------------------------------------
 
-function ExecutiveCard({ person }) {
+function LinktreePage({ person }) {
   const phoneDigits = normalizePhone(person.phone);
   const waDigits = normalizePhone(person.whatsapp);
 
   return (
     <motion.div 
-      initial={{ opacity: 0, y: 16 }} 
+      initial={{ opacity: 0, y: 12 }} 
       animate={{ opacity: 1, y: 0 }} 
-      exit={{ opacity: 0, y: -16 }} 
-      className="mx-auto w-full max-w-[520px] pb-12"
+      exit={{ opacity: 0, y: -12 }} 
+      className="mx-auto w-full max-w-[520px] px-5 py-12 flex flex-col items-center"
     >
-      {/* Header Profile Section */}
-      <div className="flex flex-col items-center pt-12 pb-8 px-6 text-center">
-        <div className="mb-8 text-[var(--cbi-green)]">
-          <Building2 className="h-10 w-10 mx-auto" strokeWidth={1.5} />
-        </div>
-        
-        <Avatar person={person} large />
-        
-        <h1 className="mt-6 text-2xl font-bold tracking-tight text-[var(--text-primary)]">
-          {person.name}
-        </h1>
-        <p className="mt-1.5 text-[15px] font-medium text-[var(--cbi-green)]">
-          {person.position}
-        </p>
-        <p className="mt-1 text-[13px] font-semibold uppercase tracking-wider text-[var(--text-secondary)]">
-          {person.department}
-        </p>
-        
-        {person.description && (
-          <p className="mt-6 text-[15px] leading-relaxed text-[var(--text-secondary)] max-w-sm mx-auto">
-            {person.description}
-          </p>
-        )}
-      </div>
+      {/* Header */}
+      <img src={`${import.meta.env.BASE_URL}logo-cbi.jpg`} alt="CBI Logo" className="h-16 w-auto mb-6 rounded-lg object-contain" />
+      
+      <h1 className="text-2xl font-bold text-[var(--text-primary)] text-center tracking-tight mb-1">
+        {person.name}
+      </h1>
+      <p className="text-[15px] text-[var(--text-secondary)] font-medium text-center mb-10">
+        {person.position}
+      </p>
 
-      {/* Action Buttons Section */}
-      <div className="px-5 space-y-3">
-        {/* Main CTA */}
-        <motion.button
-          onClick={() => downloadVCard(person)}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          transition={{ duration: 0.2 }}
-          className="flex h-14 w-full items-center justify-center gap-2.5 rounded-[24px] text-[15px] font-semibold text-white shadow-md mb-6"
-          style={{ backgroundColor: "var(--cbi-green)" }}
-        >
-          <Download className="h-5 w-5" />
-          Salvar contato
-        </motion.button>
-
+      {/* Links */}
+      <div className="w-full space-y-3.5 flex flex-col">
         <ActionCard 
           icon={LinkedinIcon} 
-          title="Conectar no LinkedIn" 
-          description={person.linkedin ? "Perfil profissional" : "Não disponível"} 
+          title="LinkedIn" 
+          description="Perfil profissional" 
           href={person.linkedin || undefined} 
           disabled={!person.linkedin}
         />
+        
         <ActionCard 
           icon={Mail} 
-          title="Enviar e-mail corporativo" 
+          title="E-mail corporativo" 
           description={person.email} 
           href={`mailto:${person.email}`} 
         />
+        
         <ActionCard 
           icon={Phone} 
-          title="Ligar agora" 
+          title="Telefone" 
           description={person.phone || "Não disponível"} 
           href={person.phone ? `tel:${phoneDigits}` : undefined} 
           disabled={!person.phone}
         />
+        
         <ActionCard 
           icon={MessageCircle} 
-          title="Iniciar conversa" 
-          description={person.whatsapp ? "WhatsApp" : "Não disponível"} 
+          title="WhatsApp" 
+          description="Iniciar conversa" 
           href={person.whatsapp ? `https://wa.me/${waDigits}` : undefined} 
           disabled={!person.whatsapp}
         />
+        
         <ActionCard 
           icon={Globe} 
-          title="Conheça a CBI" 
+          title="Site da CBI" 
           description="cbisa.com.br" 
           href="https://cbisa.com.br" 
         />
+        
+        <div className="pt-2">
+          <ActionCard 
+            icon={Download} 
+            title="Salvar contato" 
+            description="Adicionar aos contatos" 
+            onClick={() => downloadVCard(person)}
+            primary={true}
+          />
+        </div>
       </div>
 
-      {/* Footer */}
-      <div className="mt-12 text-center pb-8">
-        <p className="text-[11px] font-semibold tracking-widest uppercase text-gray-400">
-          Companhia Brasileira de Infraestrutura
-        </p>
-      </div>
     </motion.div>
   );
 }
@@ -244,34 +189,29 @@ export default function App() {
     return () => window.removeEventListener("hashchange", handleHashChange);
   }, []);
 
-  // Accept hashes like #/felipe-reis or #/director/felipe-reis or #/pages/felipe-reis
   const slug = currentHash.replace(/^#\/?(director\/|pages\/)?/, "");
-  
   const contact = directorsData.find((item) => item.slug === slug && item.active);
 
   return (
-    <div className="min-h-screen selection:bg-[var(--cbi-green-light)] selection:text-white flex flex-col justify-center">
+    <div className="min-h-[100dvh] flex flex-col items-center justify-start sm:justify-center">
       <AnimatePresence mode="wait">
         {slug === "" ? (
-          <motion.div key="home" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-center px-6 py-20">
-            <Building2 className="h-12 w-12 mx-auto text-[var(--cbi-green)] mb-6" strokeWidth={1.5} />
-            <h1 className="text-2xl font-bold text-[var(--text-primary)]">CBI Connect</h1>
-            <p className="mt-2 text-[15px] text-[var(--text-secondary)]">Cartão Executivo Digital</p>
-            <div className="mt-12 rounded-[24px] bg-white p-8 border border-[var(--border)] max-w-sm mx-auto shadow-sm">
-              <p className="text-[14px] font-medium text-[var(--text-secondary)] leading-relaxed">
-                Utilize o QR Code ou o link individual disponibilizado pelo executivo da CBI.
-              </p>
-            </div>
+          <motion.div key="home" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-center px-6 py-20 flex flex-col items-center">
+            <img src={`${import.meta.env.BASE_URL}logo-cbi.jpg`} alt="CBI Logo" className="h-16 w-auto mb-6 rounded-lg object-contain" />
+            <h1 className="text-xl font-bold text-[var(--text-primary)] mb-2">CBI Connect</h1>
+            <p className="text-[15px] text-[var(--text-secondary)] font-medium max-w-[280px]">
+              Utilize o QR Code ou o link individual disponibilizado pelo executivo da CBI.
+            </p>
           </motion.div>
         ) : contact ? (
-          <ExecutiveCard key={contact.slug} person={contact} />
+          <LinktreePage key={contact.slug} person={contact} />
         ) : (
-          <motion.div key="not-found" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-center px-6 py-20">
-            <div className="rounded-[24px] bg-white p-8 border border-[var(--border)] max-w-sm mx-auto shadow-sm">
-              <p className="text-[14px] font-medium text-[var(--text-secondary)] leading-relaxed">
-                Cartão não localizado. Verifique o link ou QR Code fornecido.
-              </p>
-            </div>
+          <motion.div key="not-found" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-center px-6 py-20 flex flex-col items-center">
+            <img src={`${import.meta.env.BASE_URL}logo-cbi.jpg`} alt="CBI Logo" className="h-16 w-auto mb-6 rounded-lg object-contain grayscale opacity-50" />
+            <h1 className="text-xl font-bold text-[var(--text-primary)] mb-2">Página não encontrada</h1>
+            <p className="text-[15px] text-[var(--text-secondary)] font-medium max-w-[280px]">
+              Verifique o link ou QR Code escaneado.
+            </p>
           </motion.div>
         )}
       </AnimatePresence>
