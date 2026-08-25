@@ -365,7 +365,7 @@ function ExecutivePage({ person }) {
       <div
         className={cn(
           "w-full lg:grid lg:min-h-[680px] lg:max-w-[1120px]",
-          "lg:grid-cols-[0.9fr_1.1fr] lg:overflow-hidden",
+          "lg:grid-cols-2 lg:overflow-hidden",
           "lg:rounded-[32px] lg:border lg:border-[var(--border)]",
           "lg:bg-white lg:shadow-[var(--shadow)]"
         )}
