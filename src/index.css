@@ -1,28 +1,30 @@
 @import "tailwindcss";
 
 :root {
-  --cbi-primary: #0f4a3b;
-  --cbi-primary-strong: #08372c;
-  --cbi-primary-soft: #e8f0ed;
+  --cbi-bg: #071d18;
+  --cbi-bg-soft: #0b2a23;
 
-  --background: #eef2f0;
-  --surface: #ffffff;
-  --surface-soft: #f2f7f5;
-  --surface-hover: #e9f2ee;
+  --cbi-surface: #10382f;
+  --cbi-surface-hover: #15483d;
+  --cbi-surface-strong: #195448;
 
-  --text-primary: #17201d;
-  --text-secondary: #66716d;
-  --text-on-primary: #ffffff;
+  --cbi-primary: #14b8a6;
+  --cbi-primary-hover: #2dd4bf;
+  --cbi-primary-soft: rgba(20, 184, 166, 0.12);
 
-  --border: rgba(15, 74, 59, 0.12);
-  --border-hover: rgba(15, 74, 59, 0.26);
-  --shadow:
-    0 24px 70px rgba(4, 36, 28, 0.12),
-    0 4px 16px rgba(4, 36, 28, 0.06);
+  --text-primary: #f8fafc;
+  --text-secondary: #a9bbb6;
+  --text-muted: #7f9891;
+
+  --border: rgba(148, 210, 194, 0.13);
+  --border-hover: rgba(45, 212, 191, 0.3);
+
+  --danger: #ef4444;
+  --success: #10b981;
 
   font-family: Inter, Arial, Helvetica, sans-serif;
   color: var(--text-primary);
-  background: var(--background);
+  background: var(--cbi-bg);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
 }
@@ -34,14 +36,14 @@
 html {
   min-width: 320px;
   min-height: 100%;
-  background: var(--background);
+  background: var(--cbi-bg);
 }
 
 body {
   min-width: 320px;
   min-height: 100%;
   margin: 0;
-  background: var(--background);
+  background: var(--cbi-bg);
   color: var(--text-primary);
   font-family: Inter, Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
