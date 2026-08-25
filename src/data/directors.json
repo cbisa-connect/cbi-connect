@@ -2,8 +2,7 @@
   {
     "slug": "felipe-reis",
     "name": "Felipe Reis",
-    "position": "Coordenação de Relações com Investidores",
-    "department": "",
+    "department": "Coordenação de Relações com Investidores",
     "company": "Companhia Brasileira de Infraestrutura",
     "email": "felipe.reis@cbisa.com.br",
     "phone": "",
@@ -11,12 +10,12 @@
     "whatsapp": "",
     "linkedin": "",
     "website": "https://cbisa.com.br",
+    "address": "",
     "active": true
   },
   {
     "slug": "alessandro-hidalgo",
     "name": "Alessandro José Conte Hidalgo",
-    "position": "Diretor Comercial",
     "department": "Diretoria Comercial e Operações",
     "company": "Companhia Brasileira de Infraestrutura",
     "email": "alessandro.hidalgo@cbisa.com.br",
@@ -25,12 +24,12 @@
     "whatsapp": "",
     "linkedin": "",
     "website": "https://cbisa.com.br",
+    "address": "Av. Gen. Furtado do Nascimento, 740, 9º andar - São Paulo, SP",
     "active": true
   },
   {
     "slug": "andre-pereira",
     "name": "André Pereira",
-    "position": "Diretor Administrativo Financeiro",
     "department": "Diretoria Administrativa, Financeira e Tecnologia",
     "company": "Companhia Brasileira de Infraestrutura",
     "email": "andre.pereira@cbisa.com.br",
@@ -39,6 +38,7 @@
     "whatsapp": "",
     "linkedin": "",
     "website": "https://cbisa.com.br",
+    "address": "",
     "active": true
   }
 ]

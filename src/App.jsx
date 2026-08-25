@@ -339,6 +339,10 @@ function ExecutiveCard({ person }) {
           external
         />
 
+        {person.address && (
+          <ActionCard icon={MapPin} title="Endereço" description={person.address} href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(person.address)}`} external />
+        )}
+
         <div className="pt-2">
           <ActionCard
             icon={Download}
