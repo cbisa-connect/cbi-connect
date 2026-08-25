@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   ChevronRight,
@@ -201,13 +201,13 @@ function InstitutionalPanel({ person }) {
         className="brand-logo relative z-10" 
       />
 
-      <div className="relative z-10 max-w-[360px]">
+      <div className="relative z-10 max-w-[360px] lg:my-auto lg:pt-8">
         <span className="inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.15em]">
           CBI Connect
         </span>
 
         <h2 className="mt-6 text-[38px] font-semibold leading-[1.08] tracking-[-0.03em]">
-          Cartão Executivo Digital
+          Cartão executivo digital
         </h2>
 
         <p className="mt-5 max-w-[310px] text-[15px] leading-relaxed text-white/72">
@@ -411,7 +411,7 @@ function ExecutivePage({ person }) {
         </header>
 
         {/* Card Container */}
-        <div className="relative z-20 -mt-6 flex items-start justify-center px-4 sm:px-6 lg:mt-0 lg:bg-white lg:px-12 lg:py-12">
+        <div className="relative z-20 -mt-6 flex items-start lg:items-center justify-center px-4 sm:px-6 lg:mt-0 lg:bg-white lg:px-12 lg:py-12">
           <ExecutiveCard person={person} />
         </div>
       </div>
@@ -484,3 +484,4 @@ export default function App() {
     </div>
   );
 }
+
