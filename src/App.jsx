@@ -1,4 +1,4 @@
-Ôªøimport { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   ChevronRight,
@@ -6,7 +6,8 @@ import {
   Globe,
   Mail,
   MessageCircle,
-  Phone
+  Phone,
+  MapPin
 } from "lucide-react";
 import clsx from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -207,7 +208,7 @@ function InstitutionalPanel({ person }) {
         </span>
 
         <h2 className="mt-6 text-[38px] font-semibold leading-[1.08] tracking-[-0.03em]">
-          Cart√£o executivo digital
+          Cart„o executivo digital
         </h2>
 
         <p className="mt-5 max-w-[310px] text-[15px] leading-relaxed text-white/72">
@@ -220,7 +221,7 @@ function InstitutionalPanel({ person }) {
           <QRCode value={`https://cbisa-connect.github.io/cbi-connect/#/${person.slug}`} size={96} bgColor="#ffffff" fgColor="#0f4a3b" />
         </div>
         <p className="relative z-10 text-[11px] font-medium uppercase tracking-[0.15em] text-white/56">
-          Conex√µes institucionais
+          Conexıes institucionais
         </p>
       </aside>
     </aside>
@@ -340,14 +341,14 @@ function ExecutiveCard({ person }) {
         />
 
         {person.address && (
-          <ActionCard icon={MapPin} title="Endere√ßo" description={person.address} href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(person.address)}`} external />
+          <ActionCard icon={MapPin} title="EndereÁo" description={person.address} href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(person.address)}`} external />
         )}
 
         <div className="pt-2">
           <ActionCard
             icon={Download}
             title="Salvar contato"
-            description="Adicionar √† agenda do celular"
+            description="Adicionar ‡ agenda do celular"
             onClick={() => downloadVCard(person)}
             primary
           />
@@ -410,7 +411,7 @@ function ExecutivePage({ person }) {
               "text-[10px] font-semibold uppercase tracking-[0.16em] text-white"
             )}
           >
-            Cart√£o executivo digital
+            Cart„o executivo digital
           </span>
         </header>
 
@@ -437,13 +438,13 @@ function EmptyState({ notFound = false }) {
         </div>
 
         <h1 className="mt-7 text-2xl font-bold text-[var(--text-primary)]">
-          {notFound ? "P√°gina n√£o encontrada" : "CBI Connect"}
+          {notFound ? "P·gina n„o encontrada" : "CBI Connect"}
         </h1>
 
         <p className="mt-3 text-[15px] leading-relaxed text-[var(--text-secondary)]">
           {notFound
             ? "Verifique o link ou o QR Code utilizado."
-            : "Acesse o cart√£o executivo pelo link ou QR Code individual disponibilizado pela CBI."}
+            : "Acesse o cart„o executivo pelo link ou QR Code individual disponibilizado pela CBI."}
         </p>
       </div>
     </motion.main>
@@ -488,4 +489,5 @@ export default function App() {
     </div>
   );
 }
+
 
