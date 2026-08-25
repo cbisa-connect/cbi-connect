@@ -153,7 +153,7 @@ function LinkPage({ person }) {
       exit={{ opacity: 0 }}
       className="min-h-[100dvh] bg-[var(--cbi-bg)] text-[var(--text-primary)]"
     >
-      <div className="mx-auto w-full max-w-[580px] px-5 pb-10 pt-8 sm:px-6 sm:pt-12">
+      <div className="mx-auto flex min-h-[100dvh] w-full max-w-[540px] flex-col justify-start px-5 pt-10 pb-10 sm:justify-center sm:pt-8">
         <header className="mb-8 text-center">
           <img
             src={`${import.meta.env.BASE_URL}logo-cbi-bco.png`}
