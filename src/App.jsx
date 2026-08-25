@@ -78,28 +78,20 @@ function ActionCard({
           "hover:bg-[var(--cbi-surface-hover)]"
         ]
   );
-  
+
   const content = (
     <>
       <span
         className={cn(
-          "grid h-11 w-11 shrink-0 place-items-center",
-          "rounded-xl border",
-          primary
-            ? [
-                "border-[rgba(45,212,191,0.22)]",
-                "bg-[var(--cbi-accent-soft)]",
-                "text-[var(--cbi-accent-hover)]"
-              ]
-            : [
-                "border-[var(--border)]",
-                "bg-[var(--cbi-accent-soft)]",
-                "text-[var(--cbi-accent)]"
-              ]
+          "grid h-11 w-11 shrink-0 place-items-center rounded-xl border",
+          "border-[var(--border)]",
+          "bg-[var(--cbi-accent-soft)]",
+          "text-[var(--cbi-accent)]"
         )}
       >
         <Icon className="h-5 w-5" strokeWidth={1.8} aria-hidden="true" />
       </span>
+
       <span className="min-w-0 flex-1 text-left">
         <span
           className={cn(
@@ -109,38 +101,35 @@ function ActionCard({
         >
           {title}
         </span>
+
         {description && (
           <span className="mt-1 block truncate text-[13px] text-[var(--text-secondary)]">
             {description}
           </span>
         )}
       </span>
+
       <ChevronRight
-        className={cn(
-          "h-5 w-5 shrink-0",
-          "text-[var(--text-muted)]",
-          "transition-transform duration-200",
-          "group-hover:translate-x-0.5"
-        )}
+        className="h-5 w-5 shrink-0 text-[var(--text-muted)] transition-transform duration-200 group-hover:translate-x-0.5"
         aria-hidden="true"
       />
     </>
   );
-  
+
   if (href) {
     return (
-      <motion.a 
-        href={href} 
+      <motion.a
+        href={href}
         target={external ? "_blank" : undefined}
         rel={external ? "noopener noreferrer" : undefined}
-        className={className} 
+        className={className}
         whileTap={{ scale: 0.988 }}
       >
         {content}
       </motion.a>
     );
   }
-  
+
   return (
     <motion.button
       type="button"
@@ -164,19 +153,22 @@ function LinkPage({ person }) {
       exit={{ opacity: 0 }}
       className="min-h-[100dvh] bg-[var(--cbi-bg)] text-[var(--text-primary)]"
     >
-      <div className="mx-auto w-[calc(100%-40px)] max-w-[660px] pb-10 pt-8 sm:pt-12">
+      <div className="mx-auto w-full max-w-[580px] px-5 pb-10 pt-8 sm:px-6 sm:pt-12">
         <header className="mb-8 text-center">
-          <img 
-            src={`${import.meta.env.BASE_URL}logo-cbi-bco.png`} 
-            alt="CBI Logo" 
-            className="brand-logo mx-auto" 
+          <img
+            src={`${import.meta.env.BASE_URL}logo-cbi-bco.png`}
+            alt="CBI Logo"
+            className="brand-logo mx-auto"
           />
+
           <h1 className="mt-8 text-[30px] font-semibold leading-[1.08] tracking-[-0.035em] text-[var(--text-primary)] sm:text-[36px]">
             {person.name}
           </h1>
+
           <p className="mt-3 text-[16px] font-semibold text-[var(--cbi-accent)]">
             {person.position}
           </p>
+
           {person.department && (
             <p className="mt-1.5 text-[14px] leading-relaxed text-[var(--text-secondary)]">
               {person.department}
@@ -211,7 +203,7 @@ function LinkPage({ person }) {
             <ActionCard
               icon={Phone}
               title="Telefone"
-              description={person.phone}
+              description={person.phoneDisplay || person.phone}
               href={`tel:+${phoneDigits}`}
             />
           )}
@@ -230,7 +222,7 @@ function LinkPage({ person }) {
             <ActionCard
               icon={Globe}
               title="Site institucional"
-              description={person.website.replace(/^https?:\/\//, '')}
+              description={person.website.replace(/^https?:\/\//, "")}
               href={person.website}
               external
             />
@@ -263,13 +255,13 @@ function EmptyState({ notFound = false }) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="grid min-h-[100dvh] place-items-center px-6 py-16 bg-[var(--cbi-bg)] text-[var(--text-primary)]"
+      className="min-h-[100dvh] bg-[var(--cbi-bg)] text-[var(--text-primary)] px-6 py-16"
     >
-      <div className="flex max-w-[340px] flex-col items-center text-center">
-        <img 
-          src={`${import.meta.env.BASE_URL}logo-cbi-bco.png`} 
-          alt="CBI Logo" 
-          className="brand-logo mb-6" 
+      <div className="mx-auto flex max-w-[340px] flex-col items-center pt-20 text-center">
+        <img
+          src={`${import.meta.env.BASE_URL}logo-cbi-bco.png`}
+          alt="CBI Logo"
+          className="brand-logo mb-6"
         />
 
         <h1 className="mt-7 text-2xl font-bold text-[var(--text-primary)]">
@@ -279,7 +271,7 @@ function EmptyState({ notFound = false }) {
         <p className="mt-3 text-[15px] leading-relaxed text-[var(--text-secondary)]">
           {notFound
             ? "Verifique o link ou o QR Code utilizado."
-            : "Acesse o cartão executivo pelo link individual disponibilizado pela CBI."}
+            : "Acesse pelo link individual disponibilizado pela CBI."}
         </p>
       </div>
     </motion.main>

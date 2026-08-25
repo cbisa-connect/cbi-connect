@@ -7,10 +7,10 @@
     "company": "Companhia Brasileira de Infraestrutura",
     "email": "felipe.reis@cbisa.com.br",
     "phone": "",
+    "phoneDisplay": "",
     "whatsapp": "",
     "linkedin": "",
     "website": "https://cbisa.com.br",
-    "photo": "",
     "active": true
   },
   {
@@ -21,10 +21,10 @@
     "company": "Companhia Brasileira de Infraestrutura",
     "email": "alessandro.hidalgo@cbisa.com.br",
     "phone": "",
+    "phoneDisplay": "",
     "whatsapp": "",
     "linkedin": "",
     "website": "https://cbisa.com.br",
-    "photo": "",
     "active": true
   },
   {
@@ -35,10 +35,10 @@
     "company": "Companhia Brasileira de Infraestrutura",
     "email": "andre.pereira@cbisa.com.br",
     "phone": "",
+    "phoneDisplay": "",
     "whatsapp": "",
     "linkedin": "",
     "website": "https://cbisa.com.br",
-    "photo": "",
     "active": true
   }
 ]

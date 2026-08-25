@@ -2,16 +2,20 @@
 
 :root {
   --cbi-bg: #061713;
-  --cbi-bg-elevated: #0a211c;
+  --cbi-bg-soft: #09221c;
+
   --cbi-surface: #0d2c25;
   --cbi-surface-hover: #123a31;
   --cbi-surface-active: #17483d;
+
   --cbi-accent: #14b8a6;
   --cbi-accent-hover: #2dd4bf;
   --cbi-accent-soft: rgba(20, 184, 166, 0.12);
+
   --text-primary: #f8fafc;
   --text-secondary: #a9bbb6;
   --text-muted: #789089;
+
   --border: rgba(148, 210, 194, 0.12);
   --border-hover: rgba(45, 212, 191, 0.28);
   --focus-ring: rgba(45, 212, 191, 0.5);
