@@ -198,7 +198,7 @@ function InstitutionalPanel({ person }) {
       <img 
         src={`${import.meta.env.BASE_URL}logo-cbi-bco.png`} 
         alt="CBI Logo" 
-        className="brand-logo !max-w-[150px] !max-h-[54px] relative z-10" 
+        className="brand-logo relative z-10" 
       />
 
       <div className="relative z-10 max-w-[360px]">
@@ -215,9 +215,14 @@ function InstitutionalPanel({ person }) {
         </p>
       </div>
 
-      <p className="relative z-10 text-[11px] font-medium uppercase tracking-[0.15em] text-white/56">
-        Conexões institucionais
-      </p>
+      <aside className="mt-auto flex flex-col gap-1">
+        <div className="rounded-2xl bg-white p-3 w-fit mb-6">
+          <QRCode value={`https://cbisa-connect.github.io/cbi-connect/#/${person.slug}`} size={96} bgColor="#ffffff" fgColor="#0f4a3b" />
+        </div>
+        <p className="relative z-10 text-[11px] font-medium uppercase tracking-[0.15em] text-white/56">
+          Conexões institucionais
+        </p>
+      </aside>
     </aside>
   );
 }
