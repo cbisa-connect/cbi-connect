@@ -4,26 +4,64 @@
   --cbi-primary: #0f4a3b;
   --cbi-primary-strong: #08372c;
   --cbi-primary-soft: #e8f0ed;
-  
+
   --background: #eef2f0;
   --surface: #ffffff;
   --surface-secondary: #f7f9f8;
-  
+
   --text-primary: #17201d;
   --text-secondary: #66716d;
   --text-on-primary: #ffffff;
-  
+
   --border: rgba(15, 74, 59, 0.12);
-  --shadow: 
+  --shadow:
     0 24px 70px rgba(4, 36, 28, 0.12),
     0 4px 16px rgba(4, 36, 28, 0.06);
+
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  color: var(--text-primary);
+  background: var(--background);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  min-height: 100%;
+  background: var(--background);
 }
 
 body {
-  background-color: var(--background);
+  min-width: 320px;
+  min-height: 100%;
+  margin: 0;
+  background: var(--background);
   color: var(--text-primary);
-  font-family: 'Inter', sans-serif;
+  font-family: Inter, Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button,
+a {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  border: 0;
+}
+
+#root {
+  min-height: 100dvh;
 }
 
 .brand-logo {

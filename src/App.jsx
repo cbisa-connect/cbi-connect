@@ -1,102 +1,146 @@
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import {
-  Mail,
-  Phone,
-  MessageCircle,
+  ChevronRight,
   Download,
   Globe,
-  ChevronRight
+  Mail,
+  MessageCircle,
+  Phone
 } from "lucide-react";
 import clsx from "clsx";
 import { twMerge } from "tailwind-merge";
 import directorsData from "./data/directors.json";
 
+const Linkedin = ({ className }) => (
+  <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+    <rect width="4" height="12" x="2" y="9" />
+    <circle cx="4" cy="4" r="2" />
+  </svg>
+);
+
 export function cn(...inputs) {
   return twMerge(clsx(inputs));
 }
 
-const PUBLIC_SITE_URL = "https://cbisa-connect.github.io/cbi-connect";
+const PUBLIC_SITE_URL = "https://cbisa-connect.github.io/cbi-connect/";
 
 function normalizePhone(phone) {
-  if (!phone) return "";
-  return phone.replace(/\D/g, "");
+  return phone ? phone.replace(/\D/g, "") : "";
+}
+
+function getInitials(name) {
+  return name
+    .trim()
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((part) => part.charAt(0))
+    .join("")
+    .toUpperCase();
 }
 
 function downloadVCard(person) {
-  const baseUrl = import.meta.env.PROD
-    ? `${PUBLIC_SITE_URL}/`
-    : import.meta.env.BASE_URL;
-  
-  const url = new URL(`${person.slug}.vcf`, baseUrl).toString();
+  const fileName = `${person.slug}.vcf`;
+
+  const url = import.meta.env.PROD
+    ? new URL(fileName, PUBLIC_SITE_URL).toString()
+    : `${window.location.origin}${import.meta.env.BASE_URL}${fileName}`;
+
   const anchor = document.createElement("a");
   anchor.href = url;
-  anchor.download = `${person.slug}.vcf`;
+  anchor.download = fileName;
   document.body.appendChild(anchor);
   anchor.click();
   anchor.remove();
 }
 
-function ActionCard({ icon: Icon, title, description, href, onClick, primary = false, external = false }) {
+function ActionCard({
+  icon: Icon,
+  title,
+  description,
+  href,
+  onClick,
+  primary = false,
+  external = false
+}) {
   const className = cn(
     "group flex min-h-[68px] w-full items-center gap-4 rounded-2xl border px-4 py-3.5",
     "transition-[transform,background-color,border-color,box-shadow] duration-200",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cbi-primary)] focus-visible:ring-offset-2",
+    "focus-visible:outline-none focus-visible:ring-2",
+    "focus-visible:ring-[var(--cbi-primary)] focus-visible:ring-offset-2",
     primary
-      ? "border-[var(--cbi-primary)] bg-[var(--cbi-primary)] text-white shadow-[0_12px_28px_rgba(15,74,59,0.18)]"
-      : "border-[var(--border)] bg-white text-[var(--text-primary)] hover:border-[rgba(15,74,59,0.28)] hover:bg-[var(--surface-secondary)]"
+      ? [
+          "border-[var(--cbi-primary)]",
+          "bg-[var(--cbi-primary)]",
+          "text-white",
+          "shadow-[0_12px_28px_rgba(15,74,59,0.18)]",
+          "hover:bg-[var(--cbi-primary-strong)]"
+        ]
+      : [
+          "border-[var(--border)]",
+          "bg-white",
+          "text-[var(--text-primary)]",
+          "hover:border-[rgba(15,74,59,0.28)]",
+          "hover:bg-[var(--surface-secondary)]"
+        ]
   );
-  
+
   const content = (
     <>
       <span
         className={cn(
           "grid h-10 w-10 shrink-0 place-items-center rounded-xl",
           primary
-            ? "bg-white/12 text-white"
+            ? "bg-white/10 text-white"
             : "bg-[var(--cbi-primary-soft)] text-[var(--cbi-primary)]"
         )}
       >
-        <Icon className="h-5 w-5" strokeWidth={1.8} />
+        <Icon className="h-5 w-5" strokeWidth={1.8} aria-hidden="true" />
       </span>
+
       <span className="min-w-0 flex-1 text-left">
         <span className="block text-[15px] font-semibold leading-tight">
           {title}
         </span>
+
         {description && (
           <span
             className={cn(
               "mt-1 block truncate text-[13px]",
-              primary ? "text-white/72" : "text-[var(--text-secondary)]"
+              primary ? "text-white/75" : "text-[var(--text-secondary)]"
             )}
           >
             {description}
           </span>
         )}
       </span>
+
       <ChevronRight
         className={cn(
-          "h-5 w-5 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5",
+          "h-5 w-5 shrink-0 transition-transform duration-200",
+          "group-hover:translate-x-0.5",
           primary ? "text-white/60" : "text-[var(--text-secondary)]"
         )}
+        aria-hidden="true"
       />
     </>
   );
-  
+
   if (href) {
     return (
       <motion.a 
-        href={href}
+        href={href} 
         target={external ? "_blank" : undefined}
         rel={external ? "noopener noreferrer" : undefined}
-        className={className}
+        className={className} 
         whileTap={{ scale: 0.985 }}
       >
         {content}
       </motion.a>
     );
   }
-  
+
   return (
     <motion.button
       type="button"
@@ -109,127 +153,211 @@ function ActionCard({ icon: Icon, title, description, href, onClick, primary = f
   );
 }
 
-function LinktreePage({ person }) {
+function QuickAction({ href, label, external = false, children }) {
+  return (
+    <motion.a
+      href={href}
+      aria-label={label}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noopener noreferrer" : undefined}
+      className={cn(
+        "grid h-12 w-12 place-items-center rounded-xl",
+        "bg-[var(--surface-secondary)] text-[var(--cbi-primary)]",
+        "transition-colors duration-200",
+        "hover:bg-[var(--cbi-primary-soft)]",
+        "focus-visible:outline-none focus-visible:ring-2",
+        "focus-visible:ring-[var(--cbi-primary)] focus-visible:ring-offset-2"
+      )}
+      whileTap={{ scale: 0.94 }}
+    >
+      {children}
+    </motion.a>
+  );
+}
+
+function ExecutivePage({ person }) {
   const phoneDigits = normalizePhone(person.phone);
-  const waDigits = normalizePhone(person.whatsapp);
+  const whatsappDigits = normalizePhone(person.whatsapp);
+  const initials = person.initials || getInitials(person.name);
+
+  const photoUrl = person.photo
+    ? `${import.meta.env.BASE_URL}${person.photo.replace(/^\/+/, "")}`
+    : "";
 
   return (
-    <motion.div 
-      initial={{ opacity: 0 }} 
-      animate={{ opacity: 1 }} 
-      exit={{ opacity: 0 }} 
-      className="mx-auto w-full min-h-[100dvh] pb-12 flex flex-col"
+    <motion.main
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="flex min-h-[100dvh] w-full flex-col pb-10"
     >
-      {/* Top Banner (Institucional Area) */}
-      <div className="w-full bg-[var(--cbi-primary)] pt-12 pb-[72px] px-6 text-center relative overflow-hidden">
-        {/* Subtle geometric detail */}
-        <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at top right, white 1%, transparent 40%)' }}></div>
-        
+      <header
+        className={cn(
+          "relative overflow-hidden bg-[var(--cbi-primary)]",
+          "px-6 pb-[76px] pt-10 text-center"
+        )}
+      >
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 opacity-20"
+          style={{
+            background:
+              "radial-gradient(circle at 82% 10%, rgba(255,255,255,.36), transparent 35%)"
+          }}
+        />
+
         <img 
           src={`${import.meta.env.BASE_URL}logo-cbi-bco.png`} 
           alt="CBI Logo" 
           className="brand-logo mx-auto relative z-10" 
         />
-        <div className="mt-4 inline-flex items-center justify-center rounded-full bg-white/10 px-3 py-1 backdrop-blur-sm relative z-10 border border-white/20">
-          <span className="text-[11px] font-semibold tracking-widest text-white uppercase">Cartão Executivo Digital</span>
-        </div>
-      </div>
 
-      {/* Profile Card Section (Overlaps header) */}
-      <div className="px-4 -mt-10 relative z-20">
-        <div className="mx-auto w-full max-w-[460px] rounded-3xl bg-white p-6 text-center shadow-[var(--shadow)] border border-[var(--border)]">
-          {/* Avatar */}
-          <div className="mx-auto -mt-16 mb-4 flex h-[104px] w-[104px] items-center justify-center rounded-full bg-[var(--cbi-primary-soft)] text-4xl font-bold text-[var(--cbi-primary)] shadow-md ring-4 ring-white">
-            {person.photo ? (
-              <img src={person.photo} alt={person.name} className="h-full w-full rounded-full object-cover" />
+        <span
+          className={cn(
+            "relative z-10 mt-4 inline-flex rounded-full",
+            "border border-white/20 bg-white/10 px-3 py-1",
+            "text-[10px] font-semibold uppercase tracking-[0.16em] text-white"
+          )}
+        >
+          Cartão executivo digital
+        </span>
+      </header>
+
+      <section className="relative z-20 -mt-10 px-4">
+        <div
+          className={cn(
+            "mx-auto w-full max-w-[460px] rounded-[28px]",
+            "border border-[var(--border)] bg-white px-6 pb-6 pt-5",
+            "text-center shadow-[var(--shadow)]"
+          )}
+        >
+          <div
+            className={cn(
+              "mx-auto -mt-[70px] mb-4 grid h-[104px] w-[104px]",
+              "place-items-center overflow-hidden rounded-full",
+              "bg-[var(--cbi-primary-soft)]",
+              "text-3xl font-bold text-[var(--cbi-primary)]",
+              "ring-4 ring-white"
+            )}
+          >
+            {photoUrl ? (
+              <img src={photoUrl} alt={person.name} className="h-full w-full rounded-full object-cover" />
             ) : (
-              person.initials
+              <span aria-label={`Iniciais de ${person.name}`}>{initials}</span>
             )}
           </div>
-          
-          <h1 className="text-xl font-bold text-[var(--text-primary)] leading-tight">
+
+          <h1 className="text-[22px] font-bold leading-tight tracking-[-0.02em] text-[var(--text-primary)]">
             {person.name}
           </h1>
-          <p className="mt-1.5 text-[15px] font-semibold text-[var(--cbi-primary)]">
+
+          <p className="mt-2 text-[15px] font-semibold leading-snug text-[var(--cbi-primary)]">
             {person.position}
           </p>
-          <p className="mt-1 text-[13px] font-medium text-[var(--text-secondary)] uppercase tracking-wide">
-            {person.department}
-          </p>
-          
+
+          {person.department && (
+            <p className="mt-1.5 text-[12px] font-medium uppercase tracking-[0.08em] text-[var(--text-secondary)]">
+              {person.department}
+            </p>
+          )}
+
           {person.description && (
-            <p className="mt-5 text-[14px] leading-relaxed text-[var(--text-secondary)] max-w-sm mx-auto">
+            <p className="mx-auto mt-5 max-w-sm text-[14px] leading-relaxed text-[var(--text-secondary)]">
               {person.description}
             </p>
           )}
 
-          {/* Quick Actions (3 buttons) */}
           <div className="mt-6 flex justify-center gap-3">
             {person.email && (
-              <a href={`mailto:${person.email}`} className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--surface-secondary)] text-[var(--cbi-primary)] transition-all hover:bg-[var(--cbi-primary-soft)] hover:text-[var(--cbi-primary-strong)] active:scale-95">
+              <QuickAction href={`mailto:${person.email}`} label="E-mail">
                 <Mail className="h-5 w-5" strokeWidth={1.8} />
-              </a>
+              </QuickAction>
             )}
+
             {person.phone && (
-              <a href={`tel:${phoneDigits}`} className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--surface-secondary)] text-[var(--cbi-primary)] transition-all hover:bg-[var(--cbi-primary-soft)] hover:text-[var(--cbi-primary-strong)] active:scale-95">
+              <QuickAction href={`tel:+${phoneDigits}`} label="Ligar">
                 <Phone className="h-5 w-5" strokeWidth={1.8} />
-              </a>
+              </QuickAction>
             )}
+
             {person.whatsapp && (
-              <a href={`https://wa.me/${waDigits}`} target="_blank" rel="noopener noreferrer" className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--surface-secondary)] text-[var(--cbi-primary)] transition-all hover:bg-[var(--cbi-primary-soft)] hover:text-[var(--cbi-primary-strong)] active:scale-95">
+              <QuickAction href={`https://wa.me/${whatsappDigits}`} label="WhatsApp" external>
                 <MessageCircle className="h-5 w-5" strokeWidth={1.8} />
-              </a>
+              </QuickAction>
             )}
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Main Links Area */}
-      <div className="mx-auto w-full max-w-[460px] px-4 pt-8 pb-10 space-y-3.5 flex flex-col">
+      <section className="mx-auto flex w-full max-w-[460px] flex-col gap-3.5 px-4 pb-10 pt-7">
         {person.linkedin && (
-          <ActionCard 
-            icon={Linkedin} 
-            title="LinkedIn" 
-            description="Perfil profissional" 
-            href={person.linkedin} 
-            external={true}
-          />
+          <ActionCard icon={Linkedin} title="LinkedIn" description="Perfil profissional" href={person.linkedin} external />
         )}
-        
+
         {person.email && (
-          <ActionCard 
-            icon={Mail} 
-            title="E-mail corporativo" 
-            description={person.email} 
-            href={`mailto:${person.email}`} 
-          />
+          <ActionCard icon={Mail} title="E-mail corporativo" description={person.email} href={`mailto:${person.email}`} />
         )}
-        
-        <ActionCard 
-          icon={Globe} 
-          title="Site da CBI" 
-          description="cbisa.com.br" 
-          href="https://cbisa.com.br" 
-          external={true}
+
+        {person.phone && (
+          <ActionCard icon={Phone} title="Telefone" description={person.phone} href={`tel:+${phoneDigits}`} />
+        )}
+
+        {person.whatsapp && (
+          <ActionCard icon={MessageCircle} title="WhatsApp" description="Iniciar conversa" href={`https://wa.me/${whatsappDigits}`} external />
+        )}
+
+        <ActionCard
+          icon={Globe}
+          title="Site institucional"
+          description="Companhia Brasileira de Infraestrutura"
+          href="https://cbisa.com.br"
+          external
         />
-        
+
         <div className="pt-2">
-          <ActionCard 
-            icon={Download} 
-            title="Salvar contato" 
-            description="Adicionar aos contatos" 
+          <ActionCard
+            icon={Download}
+            title="Salvar contato"
+            description="Adicionar à agenda do celular"
             onClick={() => downloadVCard(person)}
-            primary={true}
+            primary
           />
         </div>
-      </div>
+      </section>
 
-      <div className="mt-auto text-center px-6">
-        <p className="text-[12px] font-semibold text-[var(--text-secondary)] uppercase tracking-widest">
+      <footer className="mt-auto px-6 text-center">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--text-secondary)]">
           Companhia Brasileira de Infraestrutura
         </p>
+      </footer>
+    </motion.main>
+  );
+}
+
+function EmptyState({ notFound = false }) {
+  return (
+    <motion.main
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="grid min-h-[100dvh] place-items-center px-6 py-16"
+    >
+      <div className="flex max-w-[340px] flex-col items-center text-center">
+        <div className="rounded-2xl bg-[var(--cbi-primary)] p-5 shadow-[var(--shadow)]">
+          <img src={`${import.meta.env.BASE_URL}logo-cbi-bco.png`} alt="CBI Logo" className="brand-logo" />
+        </div>
+
+        <h1 className="mt-7 text-2xl font-bold text-[var(--text-primary)]">
+          {notFound ? "Página não encontrada" : "CBI Connect"}
+        </h1>
+
+        <p className="mt-3 text-[15px] leading-relaxed text-[var(--text-secondary)]">
+          {notFound
+            ? "Verifique o link ou o QR Code utilizado."
+            : "Acesse o cartão executivo pelo link ou QR Code individual disponibilizado pela CBI."}
+        </p>
       </div>
-    </motion.div>
+    </motion.main>
   );
 }
 
@@ -237,37 +365,35 @@ export default function App() {
   const [currentHash, setCurrentHash] = useState(window.location.hash);
 
   useEffect(() => {
-    const handleHashChange = () => {
+    function handleHashChange() {
       setCurrentHash(window.location.hash);
-    };
+    }
+
     window.addEventListener("hashchange", handleHashChange);
-    return () => window.removeEventListener("hashchange", handleHashChange);
+
+    return () => {
+      window.removeEventListener("hashchange", handleHashChange);
+    };
   }, []);
 
-  const slug = currentHash.replace(/^#\/?(director\/|pages\/)?/, "");
-  const contact = directorsData.find((item) => item.slug === slug && item.active);
+  const slug = currentHash
+    .replace(/^#\/?/, "")
+    .replace(/^(director|pages)\//, "")
+    .replace(/\/+$/, "");
+
+  const contact = directorsData.find(
+    (item) => item.slug === slug && item.active === true
+  );
 
   return (
     <div className="min-h-[100dvh] w-full bg-[var(--background)]">
       <AnimatePresence mode="wait">
-        {slug === "" ? (
-          <motion.div key="home" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-center px-6 py-20 flex flex-col items-center justify-center min-h-[100dvh]">
-            <img src={`${import.meta.env.BASE_URL}logo-cbi-bco.png`} alt="CBI Logo" className="brand-logo mb-8 rounded-lg bg-[var(--cbi-primary)] p-4" />
-            <h1 className="text-2xl font-bold text-[var(--text-primary)] mb-3">CBI Connect</h1>
-            <p className="text-[15px] text-[var(--text-secondary)] font-medium max-w-[280px]">
-              Utilize o QR Code ou o link individual disponibilizado pelo executivo da CBI.
-            </p>
-          </motion.div>
+        {!slug ? (
+          <EmptyState key="home" />
         ) : contact ? (
-          <LinktreePage key={contact.slug} person={contact} />
+          <ExecutivePage key={contact.slug} person={contact} />
         ) : (
-          <motion.div key="not-found" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-center px-6 py-20 flex flex-col items-center justify-center min-h-[100dvh]">
-            <img src={`${import.meta.env.BASE_URL}logo-cbi-bco.png`} alt="CBI Logo" className="brand-logo mb-8 rounded-lg bg-[var(--cbi-primary)] p-4 opacity-50 grayscale" />
-            <h1 className="text-2xl font-bold text-[var(--text-primary)] mb-3">Página não encontrada</h1>
-            <p className="text-[15px] text-[var(--text-secondary)] font-medium max-w-[280px]">
-              Verifique o link ou QR Code escaneado.
-            </p>
-          </motion.div>
+          <EmptyState key="not-found" notFound />
         )}
       </AnimatePresence>
     </div>
