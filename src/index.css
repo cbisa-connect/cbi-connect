@@ -1,26 +1,20 @@
 @import "tailwindcss";
 
 :root {
-  --cbi-bg: #071d18;
-  --cbi-bg-soft: #0b2a23;
-
-  --cbi-surface: #10382f;
-  --cbi-surface-hover: #15483d;
-  --cbi-surface-strong: #195448;
-
-  --cbi-primary: #14b8a6;
-  --cbi-primary-hover: #2dd4bf;
-  --cbi-primary-soft: rgba(20, 184, 166, 0.12);
-
+  --cbi-bg: #061713;
+  --cbi-bg-elevated: #0a211c;
+  --cbi-surface: #0d2c25;
+  --cbi-surface-hover: #123a31;
+  --cbi-surface-active: #17483d;
+  --cbi-accent: #14b8a6;
+  --cbi-accent-hover: #2dd4bf;
+  --cbi-accent-soft: rgba(20, 184, 166, 0.12);
   --text-primary: #f8fafc;
   --text-secondary: #a9bbb6;
-  --text-muted: #7f9891;
-
-  --border: rgba(148, 210, 194, 0.13);
-  --border-hover: rgba(45, 212, 191, 0.3);
-
-  --danger: #ef4444;
-  --success: #10b981;
+  --text-muted: #789089;
+  --border: rgba(148, 210, 194, 0.12);
+  --border-hover: rgba(45, 212, 191, 0.28);
+  --focus-ring: rgba(45, 212, 191, 0.5);
 
   font-family: Inter, Arial, Helvetica, sans-serif;
   color: var(--text-primary);
@@ -71,7 +65,7 @@ button {
 .brand-logo {
   display: block;
   width: auto;
-  max-width: 132px;
-  max-height: 48px;
+  max-width: 112px;
+  max-height: 44px;
   object-fit: contain;
 }

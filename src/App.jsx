@@ -55,18 +55,20 @@ function ActionCard({
   external = false
 }) {
   const className = cn(
-    "group flex min-h-[68px] w-full items-center gap-4 rounded-2xl border px-4 py-3.5",
-    "transition-[background-color,border-color,transform,box-shadow] duration-200",
+    "group flex min-h-[76px] w-full items-center gap-4",
+    "rounded-2xl border px-4 py-3.5",
+    "transition-[background-color,border-color,transform] duration-200",
     "focus-visible:outline-none focus-visible:ring-2",
-    "focus-visible:ring-[var(--cbi-primary)] focus-visible:ring-offset-2",
+    "focus-visible:ring-[var(--focus-ring)]",
+    "focus-visible:ring-offset-2",
     "focus-visible:ring-offset-[var(--cbi-bg)]",
     primary
       ? [
-          "border-[var(--cbi-primary)]",
-          "bg-[var(--cbi-primary)]",
-          "text-[#04241d]",
-          "shadow-[0_12px_30px_rgba(20,184,166,0.16)]",
-          "hover:bg-[var(--cbi-primary-hover)]"
+          "border-[rgba(45,212,191,0.24)]",
+          "bg-[var(--cbi-surface-active)]",
+          "text-[var(--text-primary)]",
+          "hover:border-[var(--border-hover)]",
+          "hover:bg-[#1a5145]"
         ]
       : [
           "border-[var(--border)]",
@@ -76,56 +78,55 @@ function ActionCard({
           "hover:bg-[var(--cbi-surface-hover)]"
         ]
   );
-
+  
   const content = (
     <>
       <span
         className={cn(
-          "grid h-10 w-10 shrink-0 place-items-center rounded-xl border",
+          "grid h-11 w-11 shrink-0 place-items-center",
+          "rounded-xl border",
           primary
-            ? "border-black/5 bg-black/10 text-[#04241d]"
+            ? [
+                "border-[rgba(45,212,191,0.22)]",
+                "bg-[var(--cbi-accent-soft)]",
+                "text-[var(--cbi-accent-hover)]"
+              ]
             : [
                 "border-[var(--border)]",
-                "bg-[var(--cbi-primary-soft)]",
-                "text-[var(--cbi-primary)]"
+                "bg-[var(--cbi-accent-soft)]",
+                "text-[var(--cbi-accent)]"
               ]
         )}
       >
         <Icon className="h-5 w-5" strokeWidth={1.8} aria-hidden="true" />
       </span>
-
       <span className="min-w-0 flex-1 text-left">
-        <span className="block text-[15px] font-semibold leading-tight">
+        <span
+          className={cn(
+            "block text-[15px] font-semibold leading-tight",
+            primary && "uppercase tracking-[0.02em]"
+          )}
+        >
           {title}
         </span>
-
         {description && (
-          <span
-            className={cn(
-              "mt-1 block truncate text-[13px]",
-              primary
-                ? "text-[#04241d]/75"
-                : "text-[var(--text-secondary)]"
-            )}
-          >
+          <span className="mt-1 block truncate text-[13px] text-[var(--text-secondary)]">
             {description}
           </span>
         )}
       </span>
-
       <ChevronRight
         className={cn(
-          "h-5 w-5 shrink-0 transition-transform duration-200",
-          "group-hover:translate-x-0.5",
-          primary
-            ? "text-[#04241d]/55"
-            : "text-[var(--text-muted)]"
+          "h-5 w-5 shrink-0",
+          "text-[var(--text-muted)]",
+          "transition-transform duration-200",
+          "group-hover:translate-x-0.5"
         )}
         aria-hidden="true"
       />
     </>
   );
-
+  
   if (href) {
     return (
       <motion.a 
@@ -133,26 +134,26 @@ function ActionCard({
         target={external ? "_blank" : undefined}
         rel={external ? "noopener noreferrer" : undefined}
         className={className} 
-        whileTap={{ scale: 0.985 }}
+        whileTap={{ scale: 0.988 }}
       >
         {content}
       </motion.a>
     );
   }
-
+  
   return (
     <motion.button
       type="button"
       onClick={onClick}
       className={className}
-      whileTap={{ scale: 0.985 }}
+      whileTap={{ scale: 0.988 }}
     >
       {content}
     </motion.button>
   );
 }
 
-function ExecutivePage({ person }) {
+function LinkPage({ person }) {
   const phoneDigits = normalizePhone(person.phone);
   const whatsappDigits = normalizePhone(person.whatsapp);
 
@@ -163,41 +164,30 @@ function ExecutivePage({ person }) {
       exit={{ opacity: 0 }}
       className="min-h-[100dvh] bg-[var(--cbi-bg)] text-[var(--text-primary)]"
     >
-      <div className="mx-auto w-full max-w-[500px] px-4 pb-8 pt-8 sm:px-6 sm:pt-12">
-        <header className="mb-8">
+      <div className="mx-auto w-[calc(100%-40px)] max-w-[660px] pb-10 pt-8 sm:pt-12">
+        <header className="mb-8 text-center">
           <img 
             src={`${import.meta.env.BASE_URL}logo-cbi-bco.png`} 
             alt="CBI Logo" 
-            className="brand-logo" 
+            className="brand-logo mx-auto" 
           />
-
-          <div className="mt-8">
-            <h1 className="text-[28px] font-semibold leading-[1.08] tracking-[-0.035em] text-[var(--text-primary)] sm:text-[32px]">
-              {person.name}
-            </h1>
-
-            <p className="mt-3 text-[16px] font-semibold text-[var(--cbi-primary)]">
-              {person.position}
+          <h1 className="mt-8 text-[30px] font-semibold leading-[1.08] tracking-[-0.035em] text-[var(--text-primary)] sm:text-[36px]">
+            {person.name}
+          </h1>
+          <p className="mt-3 text-[16px] font-semibold text-[var(--cbi-accent)]">
+            {person.position}
+          </p>
+          {person.department && (
+            <p className="mt-1.5 text-[14px] leading-relaxed text-[var(--text-secondary)]">
+              {person.department}
             </p>
-
-            {person.department && (
-              <p className="mt-1.5 text-[14px] leading-relaxed text-[var(--text-secondary)]">
-                {person.department}
-              </p>
-            )}
-          </div>
+          )}
         </header>
 
-        <section className="flex flex-col gap-3">
-          {person.email && (
-            <ActionCard
-              icon={Mail}
-              title="E-mail corporativo"
-              description={person.email}
-              href={`mailto:${person.email}`}
-            />
-          )}
-
+        <section
+          className="flex flex-col gap-3"
+          aria-label={`Links de contato de ${person.name}`}
+        >
           {person.linkedin && (
             <ActionCard
               icon={Linkedin}
@@ -205,6 +195,15 @@ function ExecutivePage({ person }) {
               description="Perfil profissional"
               href={person.linkedin}
               external
+            />
+          )}
+
+          {person.email && (
+            <ActionCard
+              icon={Mail}
+              title="E-mail corporativo"
+              description={person.email}
+              href={`mailto:${person.email}`}
             />
           )}
 
@@ -249,9 +248,9 @@ function ExecutivePage({ person }) {
         </section>
 
         <footer className="pt-8 text-center">
-          <p className="text-[11px] text-[var(--text-muted)]">
+          <span className="text-[11px] text-[var(--text-muted)]">
             © CBI
-          </p>
+          </span>
         </footer>
       </div>
     </motion.main>
@@ -317,7 +316,7 @@ export default function App() {
         {!slug ? (
           <EmptyState key="home" />
         ) : contact ? (
-          <ExecutivePage key={contact.slug} person={contact} />
+          <LinkPage key={contact.slug} person={contact} />
         ) : (
           <EmptyState key="not-found" notFound />
         )}
