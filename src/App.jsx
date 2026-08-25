@@ -30,16 +30,6 @@ function normalizePhone(phone) {
   return phone ? phone.replace(/\D/g, "") : "";
 }
 
-function getInitials(name) {
-  return name
-    .trim()
-    .split(/\s+/)
-    .slice(0, 2)
-    .map((part) => part.charAt(0))
-    .join("")
-    .toUpperCase();
-}
-
 function downloadVCard(person) {
   const fileName = `${person.slug}.vcf`;
 
@@ -64,27 +54,29 @@ function ActionCard({
   primary = false,
   external = false
 }) {
-  const className = cn(
-    "group flex min-h-[68px] w-full items-center gap-4 rounded-2xl border px-4 py-3.5",
-    "transition-[transform,background-color,border-color,box-shadow] duration-200",
+  const baseCardClass = cn(
+    "group flex min-h-[72px] w-full items-center gap-4 rounded-2xl",
+    "px-4 py-3.5",
+    "transition-[background-color,border-color,transform,box-shadow] duration-200",
     "focus-visible:outline-none focus-visible:ring-2",
-    "focus-visible:ring-[var(--cbi-primary)] focus-visible:ring-offset-2",
-    primary
-      ? [
-          "border-[var(--cbi-primary)]",
-          "bg-[var(--cbi-primary)]",
-          "text-white",
-          "shadow-[0_12px_28px_rgba(15,74,59,0.18)]",
-          "hover:bg-[var(--cbi-primary-strong)]"
-        ]
-      : [
-          "border-[var(--border)]",
-          "bg-white",
-          "text-[var(--text-primary)]",
-          "hover:border-[rgba(15,74,59,0.28)]",
-          "hover:bg-[var(--surface-secondary)]"
-        ]
+    "focus-visible:ring-[var(--cbi-primary)] focus-visible:ring-offset-2"
   );
+
+  const primaryCardClass = cn(
+    baseCardClass,
+    "border border-[var(--cbi-primary)]",
+    "bg-[var(--cbi-primary)] text-white",
+    "shadow-[0_10px_24px_rgba(15,74,59,0.16)]",
+    "hover:bg-[var(--cbi-primary-strong)]"
+  );
+
+  const secondaryCardClass = cn(
+    baseCardClass,
+    "border border-[var(--border)] bg-[var(--surface-soft)] text-[var(--text-primary)]",
+    "hover:border-[var(--border-hover)] hover:bg-[var(--surface-hover)]"
+  );
+
+  const className = primary ? primaryCardClass : secondaryCardClass;
 
   const content = (
     <>
@@ -93,7 +85,7 @@ function ActionCard({
           "grid h-10 w-10 shrink-0 place-items-center rounded-xl",
           primary
             ? "bg-white/10 text-white"
-            : "bg-[var(--cbi-primary-soft)] text-[var(--cbi-primary)]"
+            : "border border-[var(--border)] bg-white text-[var(--cbi-primary)]"
         )}
       >
         <Icon className="h-5 w-5" strokeWidth={1.8} aria-hidden="true" />
@@ -162,9 +154,9 @@ function QuickAction({ href, label, external = false, children }) {
       rel={external ? "noopener noreferrer" : undefined}
       className={cn(
         "grid h-12 w-12 place-items-center rounded-xl",
-        "bg-[var(--surface-secondary)] text-[var(--cbi-primary)]",
+        "bg-[var(--surface-soft)] border border-[var(--border)] text-[var(--cbi-primary)]",
         "transition-colors duration-200",
-        "hover:bg-[var(--cbi-primary-soft)]",
+        "hover:bg-[var(--surface-hover)] hover:border-[var(--border-hover)]",
         "focus-visible:outline-none focus-visible:ring-2",
         "focus-visible:ring-[var(--cbi-primary)] focus-visible:ring-offset-2"
       )}
@@ -178,19 +170,14 @@ function QuickAction({ href, label, external = false, children }) {
 function InstitutionalPanel() {
   return (
     <aside
-      className={cn(
-        "relative hidden overflow-hidden",
-        "bg-[var(--cbi-primary)]",
-        "px-12 py-14 text-white",
-        "lg:flex lg:flex-col lg:justify-between"
-      )}
+      className="relative hidden overflow-hidden bg-[var(--cbi-primary)] px-12 py-12 text-white lg:flex lg:flex-col lg:justify-between"
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
+        className="pointer-events-none absolute inset-0 opacity-20"
         style={{
           background:
-            "radial-gradient(circle at 85% 15%, rgba(255,255,255,.16), transparent 34%)"
+            "radial-gradient(circle at 82% 12%, rgba(255,255,255,.18), transparent 34%)"
         }}
       />
 
@@ -200,35 +187,52 @@ function InstitutionalPanel() {
         className="brand-logo !max-w-[150px] !max-h-[54px] relative z-10" 
       />
 
-      <div className="relative z-10 max-w-[360px]">
-        <span className="inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.15em]">
-          CBI Connect
-        </span>
-
-        <h2 className="mt-6 text-[38px] font-semibold leading-[1.08] tracking-[-0.03em]">
+      <div className="relative z-10">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/68">
           Cartão Executivo Digital
-        </h2>
-
-        <p className="mt-5 max-w-[310px] text-[15px] leading-relaxed text-white/72">
-          Companhia Brasileira de Infraestrutura
         </p>
       </div>
 
-      <p className="relative z-10 text-[11px] font-medium uppercase tracking-[0.15em] text-white/56">
-        Conexões institucionais
+      <p className="relative z-10 max-w-[260px] text-[11px] font-medium uppercase tracking-[0.13em] text-white/58">
+        Companhia Brasileira de Infraestrutura
       </p>
     </aside>
+  );
+}
+
+function ExecutiveIdentity({ person }) {
+  return (
+    <section className="border-b border-[var(--border)] pb-7 text-left">
+      <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[var(--cbi-primary)]">
+        Diretoria CBI
+      </span>
+
+      <h1 className="mt-3 text-[28px] lg:text-[30px] font-bold leading-[1.12] tracking-[-0.03em] text-[var(--text-primary)]">
+        {person.name}
+      </h1>
+
+      <p className="mt-3 text-[16px] font-semibold text-[var(--cbi-primary)]">
+        {person.position}
+      </p>
+
+      {person.department && (
+        <p className="mt-1 text-[13px] leading-relaxed text-[var(--text-secondary)]">
+          {person.department}
+        </p>
+      )}
+
+      {person.company && (
+        <p className="mt-3 text-[11px] font-medium uppercase tracking-[0.1em] text-[var(--text-secondary)]">
+          {person.company}
+        </p>
+      )}
+    </section>
   );
 }
 
 function ExecutiveCard({ person }) {
   const phoneDigits = normalizePhone(person.phone);
   const whatsappDigits = normalizePhone(person.whatsapp);
-  const initials = person.initials || getInitials(person.name);
-
-  const photoUrl = person.photo
-    ? `${import.meta.env.BASE_URL}${person.photo.replace(/^\/+/, "")}`
-    : "";
 
   const quickActions = [
     person.email
@@ -259,58 +263,12 @@ function ExecutiveCard({ person }) {
   ].filter(Boolean);
 
   return (
-    <div className="w-full max-w-[480px] mx-auto lg:mx-0 flex flex-col items-center">
-      
-      {/* Profile Card */}
-      <div
-        className={cn(
-          "w-full rounded-[28px]",
-          "border border-[var(--border)]",
-          "bg-white px-5 pb-6 pt-5",
-          "shadow-[var(--shadow)]",
-          "sm:px-7 sm:pb-7",
-          "lg:max-w-[500px]",
-          "lg:shadow-none"
-        )}
-      >
-        <div
-          className={cn(
-            "mx-auto -mt-[70px] mb-4 grid h-[104px] w-[104px]",
-            "place-items-center overflow-hidden rounded-full",
-            "bg-[var(--cbi-primary-soft)]",
-            "text-3xl font-bold text-[var(--cbi-primary)]",
-            "ring-4 ring-white"
-          )}
-        >
-          {photoUrl ? (
-            <img src={photoUrl} alt={person.name} className="h-full w-full object-cover rounded-full" />
-          ) : (
-            <span aria-label={`Iniciais de ${person.name}`}>{initials}</span>
-          )}
-        </div>
-
-        <h1 className="text-[22px] font-bold leading-tight tracking-[-0.02em] text-[var(--text-primary)] text-center">
-          {person.name}
-        </h1>
-
-        <p className="mt-2 text-[15px] font-semibold leading-snug text-[var(--cbi-primary)] text-center">
-          {person.position}
-        </p>
-
-        {person.department && (
-          <p className="mt-1.5 text-[12px] font-medium uppercase tracking-[0.08em] text-[var(--text-secondary)] text-center">
-            {person.department}
-          </p>
-        )}
-
-        {person.description && (
-          <p className="mx-auto mt-5 max-w-sm text-[14px] leading-relaxed text-[var(--text-secondary)] text-center">
-            {person.description}
-          </p>
-        )}
+    <div className="w-full max-w-[480px] mx-auto lg:mx-0 flex flex-col">
+      <div className="px-5 sm:px-7 pt-4">
+        <ExecutiveIdentity person={person} />
 
         {quickActions.length >= 2 && (
-          <div className="mt-6 flex justify-center gap-3">
+          <div className="mt-6 flex justify-start gap-3">
             {quickActions.map((action) => {
               const Icon = action.icon;
               return (
@@ -323,8 +281,7 @@ function ExecutiveCard({ person }) {
         )}
       </div>
 
-      {/* Main Links Area */}
-      <div className="w-full flex flex-col gap-3.5 pt-7 pb-10">
+      <div className="w-full flex flex-col gap-3.5 px-4 sm:px-7 pt-7 pb-10">
         {person.linkedin && (
           <ActionCard icon={Linkedin} title="LinkedIn" description="Perfil profissional" href={person.linkedin} external />
         )}
@@ -359,12 +316,6 @@ function ExecutiveCard({ person }) {
           />
         </div>
       </div>
-
-      <footer className="mt-auto px-6 text-center lg:hidden pb-10">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--text-secondary)]">
-          Companhia Brasileira de Infraestrutura
-        </p>
-      </footer>
     </div>
   );
 }
@@ -391,7 +342,7 @@ function ExecutivePage({ person }) {
         <header
           className={cn(
             "relative overflow-hidden bg-[var(--cbi-primary)]",
-            "px-6 pb-[120px] pt-10 text-center lg:hidden"
+            "px-6 pb-[48px] pt-10 text-center lg:hidden"
           )}
         >
           <div
@@ -408,20 +359,10 @@ function ExecutivePage({ person }) {
             alt="CBI Logo" 
             className="brand-logo mx-auto relative z-10" 
           />
-
-          <span
-            className={cn(
-              "relative z-10 mt-5 inline-flex rounded-full",
-              "border border-white/20 bg-white/10 px-3 py-1",
-              "text-[10px] font-semibold uppercase tracking-[0.16em] text-white"
-            )}
-          >
-            Cartão executivo digital
-          </span>
         </header>
 
         {/* Card Container */}
-        <div className="relative z-20 -mt-10 flex items-start justify-center px-4 sm:px-6 lg:mt-0 lg:bg-white lg:px-12 lg:py-12">
+        <div className="relative z-20 flex items-start justify-center pt-6 lg:pt-12 px-2 sm:px-4 lg:px-8 lg:bg-white">
           <ExecutiveCard person={person} />
         </div>
       </div>

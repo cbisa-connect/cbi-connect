@@ -7,13 +7,15 @@
 
   --background: #eef2f0;
   --surface: #ffffff;
-  --surface-secondary: #f7f9f8;
+  --surface-soft: #f2f7f5;
+  --surface-hover: #e9f2ee;
 
   --text-primary: #17201d;
   --text-secondary: #66716d;
   --text-on-primary: #ffffff;
 
   --border: rgba(15, 74, 59, 0.12);
+  --border-hover: rgba(15, 74, 59, 0.26);
   --shadow:
     0 24px 70px rgba(4, 36, 28, 0.12),
     0 4px 16px rgba(4, 36, 28, 0.06);
