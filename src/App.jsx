@@ -226,7 +226,7 @@ function InstitutionalPanel({ person }) {
         </span>
 
         <h2 className="mt-6 text-[38px] font-semibold leading-[1.08] tracking-[-0.03em]">
-          CartÃ£o executivo digital
+          Cartão executivo digital
         </h2>
 
         <p className="mt-5 max-w-[310px] text-[15px] leading-relaxed text-white/72">
@@ -239,7 +239,7 @@ function InstitutionalPanel({ person }) {
           <QRCode value={`https://cbisa-connect.github.io/cbi-connect/#/${person.slug}`} size={96} bgColor="#ffffff" fgColor="#0f4a3b" />
         </div>
         <p className="relative z-10 text-[11px] font-medium uppercase tracking-[0.15em] text-white/56">
-          ConexÃµes institucionais
+          Conexões institucionais
         </p>
       </aside>
     </aside>
@@ -298,19 +298,13 @@ function ExecutiveCard({ person }) {
           "lg:shadow-none"
         )}
       >
-        <h1 className="text-[22px] font-bold leading-tight tracking-[-0.02em] text-[var(--text-primary)] text-center">
+                <h1 className="text-[22px] font-bold leading-tight tracking-[-0.02em] text-[var(--text-primary)] text-center">
           {person.name}
         </h1>
 
         <p className="mt-2 text-[15px] font-semibold leading-snug text-[var(--cbi-primary)] text-center">
-          {person.position}
+          {person.department}
         </p>
-
-        {person.department && (
-          <p className="mt-1.5 text-[12px] font-medium uppercase tracking-[0.08em] text-[var(--text-secondary)] text-center">
-            {person.department}
-          </p>
-        )}
 
         {person.description && (
           <p className="mx-auto mt-5 max-w-sm text-[14px] leading-relaxed text-[var(--text-secondary)] text-center">
@@ -359,14 +353,14 @@ function ExecutiveCard({ person }) {
         />
 
         {person.address && (
-          <ActionCard icon={MapPin} title="EndereÃ§o" description={person.address} href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(person.address)}`} external />
+          <ActionCard icon={MapPin} title="Endereçon.address)}`} external />
         )}
 
         <div className="pt-2">
           <ActionCard
             icon={Download}
             title="Salvar contato"
-            description="Adicionar Ã  agenda do celular"
+            description="Adicionar à agenda do celular"
             onClick={() => downloadVCard(person)}
             primary
           />
@@ -429,7 +423,7 @@ function ExecutivePage({ person }) {
               "text-[10px] font-semibold uppercase tracking-[0.16em] text-white"
             )}
           >
-            CartÃ£o executivo digital
+            Cartão executivo digital
           </span>
         </header>
 
@@ -456,7 +450,7 @@ function EmptyState({ notFound = false }) {
         </div>
 
         <h1 className="mt-7 text-2xl font-bold text-[var(--text-primary)]">
-          {notFound ? "PÃ¡gina nÃ£o encontrada" : "CBI Connect"}
+          {notFound ? "Página nãonnect"}
         </h1>
 
         <p className="mt-3 text-[15px] leading-relaxed text-[var(--text-secondary)]">
