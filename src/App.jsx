@@ -286,12 +286,6 @@ function ExecutiveCard({ person }) {
           </p>
         )}
 
-        {person.description && (
-          <p className="mx-auto mt-5 max-w-sm text-[14px] leading-relaxed text-[var(--text-secondary)] text-center">
-            {person.description}
-          </p>
-        )}
-
         
       </div>
 
