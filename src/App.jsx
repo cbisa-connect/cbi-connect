@@ -292,18 +292,7 @@ function ExecutiveCard({ person }) {
           </p>
         )}
 
-        {quickActions.length >= 2 && (
-          <div className="mt-6 flex justify-center gap-3">
-            {quickActions.map((action) => {
-              const Icon = action.icon;
-              return (
-                <QuickAction key={action.key} href={action.href} label={action.label} external={action.external}>
-                  <Icon className="h-5 w-5" strokeWidth={1.8} />
-                </QuickAction>
-              );
-            })}
-          </div>
-        )}
+        
       </div>
 
       {/* Main Links Area */}
