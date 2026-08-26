@@ -42,19 +42,37 @@ function getInitials(name) {
     .toUpperCase();
 }
 
+function makeVCard(person) {
+  const lines = [
+    "BEGIN:VCARD",
+    "VERSION:3.0",
+    `FN:${person.name}`,
+    "ORG:Companhia Brasileira de Infraestrutura",
+    `TITLE:${person.department}`,
+    person.phone ? `TEL;TYPE=WORK,VOICE:+55${person.phone}` : "",
+    person.whatsapp ? `TEL;TYPE=CELL:+${person.whatsapp}` : "",
+    `EMAIL;TYPE=WORK:${person.email}`,
+    person.addressStreet
+      ? `ADR;TYPE=WORK:;;${person.addressStreet};${person.addressCity};${person.addressState};;Brasil`
+      : "",
+    person.website ? `URL:${person.website}` : "",
+    "END:VCARD"
+  ].filter(Boolean);
+  return lines.join("\r\n");
+}
+
 function downloadVCard(person) {
-  const fileName = `${person.slug}.vcf`;
-
-  const url = import.meta.env.PROD
-    ? new URL(fileName, PUBLIC_SITE_URL).toString()
-    : `${window.location.origin}${import.meta.env.BASE_URL}${fileName}`;
-
+  const vcfContent = makeVCard(person);
+  const blob = new Blob([vcfContent], { type: 'text/vcard;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  
   const anchor = document.createElement("a");
   anchor.href = url;
-  anchor.download = fileName;
+  anchor.download = `${person.slug}.vcf`;
   document.body.appendChild(anchor);
   anchor.click();
   anchor.remove();
+  URL.revokeObjectURL(url);
 }
 
 function ActionCard({
@@ -208,7 +226,7 @@ function InstitutionalPanel({ person }) {
         </span>
 
         <h2 className="mt-6 text-[38px] font-semibold leading-[1.08] tracking-[-0.03em]">
-          Cartão executivo digital
+          CartÃ£o executivo digital
         </h2>
 
         <p className="mt-5 max-w-[310px] text-[15px] leading-relaxed text-white/72">
@@ -221,7 +239,7 @@ function InstitutionalPanel({ person }) {
           <QRCode value={`https://cbisa-connect.github.io/cbi-connect/#/${person.slug}`} size={96} bgColor="#ffffff" fgColor="#0f4a3b" />
         </div>
         <p className="relative z-10 text-[11px] font-medium uppercase tracking-[0.15em] text-white/56">
-          Conexões institucionais
+          ConexÃµes institucionais
         </p>
       </aside>
     </aside>
@@ -325,11 +343,11 @@ function ExecutiveCard({ person }) {
         )}
 
         {person.phone && (
-          <ActionCard icon={Phone} title="Telefone" description={person.phone} href={`tel:+${phoneDigits}`} />
+          <ActionCard icon={Phone} title="Telefone" description={person.phoneDisplay || person.phone} href={`tel:+${phoneDigits}`} />
         )}
 
         {person.whatsapp && (
-          <ActionCard icon={MessageCircle} title="WhatsApp" description="Iniciar conversa" href={`https://wa.me/${whatsappDigits}`} external />
+          <ActionCard icon={MessageCircle} title="WhatsApp" description={person.whatsappDisplay || "Iniciar conversa"} href={`https://wa.me/${whatsappDigits}`} external />
         )}
 
         <ActionCard
@@ -341,14 +359,14 @@ function ExecutiveCard({ person }) {
         />
 
         {person.address && (
-          <ActionCard icon={MapPin} title="Endereço" description={person.address} href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(person.address)}`} external />
+          <ActionCard icon={MapPin} title="EndereÃ§o" description={person.address} href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(person.address)}`} external />
         )}
 
         <div className="pt-2">
           <ActionCard
             icon={Download}
             title="Salvar contato"
-            description="Adicionar à agenda do celular"
+            description="Adicionar Ã  agenda do celular"
             onClick={() => downloadVCard(person)}
             primary
           />
@@ -411,7 +429,7 @@ function ExecutivePage({ person }) {
               "text-[10px] font-semibold uppercase tracking-[0.16em] text-white"
             )}
           >
-            Cartão executivo digital
+            CartÃ£o executivo digital
           </span>
         </header>
 
@@ -438,13 +456,13 @@ function EmptyState({ notFound = false }) {
         </div>
 
         <h1 className="mt-7 text-2xl font-bold text-[var(--text-primary)]">
-          {notFound ? "Página não encontrada" : "CBI Connect"}
+          {notFound ? "PÃ¡gina nÃ£o encontrada" : "CBI Connect"}
         </h1>
 
         <p className="mt-3 text-[15px] leading-relaxed text-[var(--text-secondary)]">
           {notFound
             ? "Verifique o link ou o QR Code utilizado."
-            : "Acesse o cartão executivo pelo link ou QR Code individual disponibilizado pela CBI."}
+            : "Acesse o cartÃ£o executivo pelo link ou QR Code individual disponibilizado pela CBI."}
         </p>
       </div>
     </motion.main>
@@ -489,5 +507,6 @@ export default function App() {
     </div>
   );
 }
+
 
 
