@@ -255,33 +255,7 @@ function ExecutiveCard({ person }) {
     ? `${import.meta.env.BASE_URL}${person.photo.replace(/^\/+/, "")}`
     : "";
 
-  const quickActions = [
-    person.email
-      ? {
-          key: "email",
-          href: `mailto:${person.email}`,
-          label: "Enviar e-mail",
-          icon: Mail
-        }
-      : null,
-    person.phone
-      ? {
-          key: "phone",
-          href: `tel:+${phoneDigits}`,
-          label: "Ligar",
-          icon: Phone
-        }
-      : null,
-    person.whatsapp
-      ? {
-          key: "whatsapp",
-          href: `https://wa.me/${whatsappDigits}`,
-          label: "Abrir WhatsApp",
-          icon: MessageCircle,
-          external: true
-        }
-      : null
-  ].filter(Boolean);
+  
 
   return (
     <div className="w-full max-w-[480px] mx-auto lg:mx-0 flex flex-col items-center">
@@ -298,13 +272,19 @@ function ExecutiveCard({ person }) {
           "lg:shadow-none"
         )}
       >
-                <h1 className="text-[22px] font-bold leading-tight tracking-[-0.02em] text-[var(--text-primary)] text-center">
+        <h1 className="text-[22px] font-bold leading-tight tracking-[-0.02em] text-[var(--text-primary)] text-center">
           {person.name}
         </h1>
 
         <p className="mt-2 text-[15px] font-semibold leading-snug text-[var(--cbi-primary)] text-center">
-          {person.department}
+          {person.position}
         </p>
+
+        {person.department && (
+          <p className="mt-1.5 text-[12px] font-medium uppercase tracking-[0.08em] text-[var(--text-secondary)] text-center">
+            {person.department}
+          </p>
+        )}
 
         {person.description && (
           <p className="mx-auto mt-5 max-w-sm text-[14px] leading-relaxed text-[var(--text-secondary)] text-center">
@@ -353,7 +333,7 @@ function ExecutiveCard({ person }) {
         />
 
         {person.address && (
-          <ActionCard icon={MapPin} title="Endereçon.address)}`} external />
+          <ActionCard icon={MapPin} title="Endereço" description={person.address} href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(person.address)}`} external />
         )}
 
         <div className="pt-2">
@@ -450,13 +430,13 @@ function EmptyState({ notFound = false }) {
         </div>
 
         <h1 className="mt-7 text-2xl font-bold text-[var(--text-primary)]">
-          {notFound ? "Página nãonnect"}
+          {notFound ? "Página não encontrada" : "CBI Connect"}
         </h1>
 
         <p className="mt-3 text-[15px] leading-relaxed text-[var(--text-secondary)]">
           {notFound
             ? "Verifique o link ou o QR Code utilizado."
-            : "Acesse o cartÃ£o executivo pelo link ou QR Code individual disponibilizado pela CBI."}
+            : "Acesse o cartão executivo pelo link ou QR Code individual disponibilizado pela CBI."}
         </p>
       </div>
     </motion.main>
