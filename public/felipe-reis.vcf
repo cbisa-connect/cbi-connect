@@ -2,6 +2,6 @@ BEGIN:VCARD
 VERSION:3.0
 FN:Felipe Reis
 ORG:Companhia Brasileira de Infraestrutura
-TITLE:Coordenação de Relações com Investidores
+TEL;TYPE=CELL:+1139002299
 EMAIL;TYPE=WORK:felipe.reis@cbisa.com.br
 END:VCARD

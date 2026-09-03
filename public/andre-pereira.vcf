@@ -2,6 +2,7 @@ BEGIN:VCARD
 VERSION:3.0
 FN:André Pereira
 ORG:Companhia Brasileira de Infraestrutura
-TITLE:Diretoria Administrativa, Financeira e Tecnologia
+TEL;TYPE=CELL:+1139002299
 EMAIL;TYPE=WORK:andre.pereira@cbisa.com.br
+URL:https://www.linkedin.com/in/andre-de-souza-pereira-8054b119/
 END:VCARD

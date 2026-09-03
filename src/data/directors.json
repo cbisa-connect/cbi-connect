@@ -1,8 +1,7 @@
-﻿[
+[
   {
     "slug": "felipe-reis",
     "name": "Felipe Reis",
-    "department": "Relações com Investidores",
     "company": "Companhia Brasileira de Infraestrutura",
     "email": "felipe.reis@cbisa.com.br",
     "phone": "1139002299",
@@ -11,16 +10,11 @@
     "whatsappDisplay": "(11) 99541-9546",
     "linkedin": "",
     "website": "https://cbisa.com.br",
-    "address": "Av. Gen. Furtado do Nascimento, 740, 9º andar - São Paulo, SP",
-    "addressStreet": "Av. Gen. Furtado do Nascimento 740 9 andar",
-    "addressCity": "São Paulo",
-    "addressState": "SP",
     "active": true
   },
   {
     "slug": "alessandro-hidalgo",
     "name": "Alessandro José Conte Hidalgo",
-    "department": "Diretoria Comercial e Operações",
     "company": "Companhia Brasileira de Infraestrutura",
     "email": "alessandro.hidalgo@cbisa.com.br",
     "phone": "1139002299",
@@ -29,16 +23,11 @@
     "whatsappDisplay": "(11) 98129-6949",
     "linkedin": "https://www.linkedin.com/in/alessandro-hidalgo-2b00441a/",
     "website": "https://cbisa.com.br",
-    "address": "Av. Gen. Furtado do Nascimento, 740, 9º andar - São Paulo, SP",
-    "addressStreet": "Av. Gen. Furtado do Nascimento 740 9 andar",
-    "addressCity": "São Paulo",
-    "addressState": "SP",
     "active": true
   },
   {
     "slug": "andre-pereira",
     "name": "André Pereira",
-    "department": "Diretoria Administrativa, Financeira e Tecnologia",
     "company": "Companhia Brasileira de Infraestrutura",
     "email": "andre.pereira@cbisa.com.br",
     "phone": "1139002299",
@@ -47,10 +36,6 @@
     "whatsappDisplay": "(11) 91782-7381",
     "linkedin": "https://www.linkedin.com/in/andre-de-souza-pereira-8054b119/",
     "website": "https://cbisa.com.br",
-    "address": "Av. Gen. Furtado do Nascimento, 740, 9º andar - São Paulo, SP",
-    "addressStreet": "Av. Gen. Furtado do Nascimento 740 9 andar",
-    "addressCity": "São Paulo",
-    "addressState": "SP",
     "active": true
   }
 ]

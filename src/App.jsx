@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   ChevronRight,
@@ -6,8 +6,7 @@ import {
   Globe,
   Mail,
   MessageCircle,
-  Phone,
-  MapPin
+  Phone
 } from "lucide-react";
 import clsx from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -48,13 +47,9 @@ function makeVCard(person) {
     "VERSION:3.0",
     `FN:${person.name}`,
     "ORG:Companhia Brasileira de Infraestrutura",
-    `TITLE:${person.department}`,
     person.phone ? `TEL;TYPE=WORK,VOICE:+55${person.phone}` : "",
     person.whatsapp ? `TEL;TYPE=CELL:+${person.whatsapp}` : "",
     `EMAIL;TYPE=WORK:${person.email}`,
-    person.addressStreet
-      ? `ADR;TYPE=WORK:;;${person.addressStreet};${person.addressCity};${person.addressState};;Brasil`
-      : "",
     person.website ? `URL:${person.website}` : "",
     "END:VCARD"
   ].filter(Boolean);
@@ -275,18 +270,6 @@ function ExecutiveCard({ person }) {
         <h1 className="text-[22px] font-bold leading-tight tracking-[-0.02em] text-[var(--text-primary)] text-center">
           {person.name}
         </h1>
-
-        <p className="mt-2 text-[15px] font-semibold leading-snug text-[var(--cbi-primary)] text-center">
-          {person.position}
-        </p>
-
-        {person.department && (
-          <p className="mt-1.5 text-[12px] font-medium uppercase tracking-[0.08em] text-[var(--text-secondary)] text-center">
-            {person.department}
-          </p>
-        )}
-
-        
       </div>
 
       {/* Main Links Area */}
@@ -314,10 +297,6 @@ function ExecutiveCard({ person }) {
           href="https://cbisa.com.br"
           external
         />
-
-        {person.address && (
-          <ActionCard icon={MapPin} title="Endereço" description={person.address} href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(person.address)}`} external />
-        )}
 
         <div className="pt-2">
           <ActionCard

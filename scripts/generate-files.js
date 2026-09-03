@@ -21,7 +21,6 @@ function makeVCard(person) {
     "VERSION:3.0",
     `FN:${person.name}`,
     "ORG:Companhia Brasileira de Infraestrutura",
-    `TITLE:${person.position}`,
     person.phone ? `TEL;TYPE=CELL:+${normalizePhone(person.phone)}` : "",
     `EMAIL;TYPE=WORK:${person.email}`,
     person.linkedin ? `URL:${person.linkedin}` : "",
