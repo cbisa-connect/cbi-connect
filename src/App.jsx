@@ -50,6 +50,7 @@ function makeVCard(person) {
     person.phone ? `TEL;TYPE=WORK,VOICE:+55${person.phone}` : "",
     person.whatsapp ? `TEL;TYPE=CELL:+${person.whatsapp}` : "",
     `EMAIL;TYPE=WORK:${person.email}`,
+    person.linkedin ? `URL:${person.linkedin}` : "",
     person.website ? `URL:${person.website}` : "",
     "END:VCARD"
   ].filter(Boolean);
